@@ -151,11 +151,11 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                     <div class="flex flex-col space-y-1.5">
                         <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Filter Client</label>
-                        <select id="filter-client" onchange="executeAdvancedFilter()" class="bg-slate-900 border border-slate-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 w-full">
-                            <option value="ALL">Semua Client</option>
-                            <option value="Komatsu">PT Komatsu Indonesia</option>
-                            <option value="Sumitomo">PT Sumitomo Construction</option>
-                        </select>
+                        <select id="filter-client" onchange="updateUnitDropdownOptions(); executeAdvancedFilter();" class="bg-slate-900 border border-slate-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 w-full">
+    <option value="ALL">Semua Client</option>
+    <option value="Komatsu">PT Komatsu Indonesia</option>
+    <option value="Sumitomo">PT Sumitomo Construction</option>
+</select>
                     </div>
                     <div class="flex flex-col space-y-1.5">
                         <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Filter Unit Number</label>
@@ -226,8 +226,8 @@
     </div>
 
     <script>
-        // MASUKKAN URL APPS SCRIPT BARU HASIL DEPLOY UTK BARIS 748 DI SINI
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxF89cUyRnNPopAqZAtD-ZlGb09g9mtOtbrydVHZTmWO1rGhcnQGz_h_d7lf3RTbgX90g/exec";
+        // MASUKKAN URL APPS SCRIPT BARU HASIL DEPLOY DI SINI
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxOzrnrtummOVxb37X9pFHv8dYIzHmIP6Z27Kn2KgbtsMbD1DnAxPTrZiPP3ksKg04dJA/exec";
 
         let fullDataCache = [];
         let monthlyChartInstance = null;
@@ -278,46 +278,72 @@
             const refreshIcon = document.getElementById('refresh-icon');
             const syncStatus = document.getElementById('sync-status');
             
-            refreshIcon.classList.add('fa-spin');
-            syncStatus.innerHTML = `<i class="fa-solid fa-arrows-rotate mr-1.5 fa-spin text-amber-400"></i>Menyinkronkan...`;
+            if (refreshIcon) refreshIcon.classList.add('fa-spin');
+            if (syncStatus) syncStatus.innerHTML = `<i class="fa-solid fa-arrows-rotate mr-1.5 fa-spin text-amber-400"></i>Menyinkronkan...`;
 
             fetch(APPS_SCRIPT_URL)
                 .then(response => response.json())
                 .then(data => {
-                    fullDataCache = data;
-                    populateUnitDropdown(data);
-                    renderDashboard(data);
+                    fullDataCache = data || [];
                     
-                    syncStatus.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5 text-emerald-400"></i>Terhubung & Up to Date`;
-                    refreshIcon.classList.remove('fa-spin');
+                    // Alur diperbaiki: Opsi unit langsung dihitung ulang saat data cache masuk
+                    updateUnitDropdownOptions();
+                    renderDashboard(fullDataCache);
+                    
+                    if (syncStatus) syncStatus.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5 text-emerald-400"></i>Terhubung & Up to Date`;
+                    if (refreshIcon) refreshIcon.classList.remove('fa-spin');
                 })
                 .catch(error => {
                     console.error("Gagal sinkronisasi:", error);
-                    syncStatus.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5 text-rose-500"></i>Koneksi Terputus`;
-                    refreshIcon.classList.remove('fa-spin');
+                    if (syncStatus) syncStatus.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5 text-rose-500"></i>Koneksi Terputus`;
+                    if (refreshIcon) refreshIcon.classList.remove('fa-spin');
                 });
         }
 
         function populateUnitDropdown(data) {
+            updateUnitDropdownOptions();
+        }
+
+        // LOGIKA DINAMIS: Opsi pilihan unit menyaring mandiri berdasarkan filter client aktif
+        function updateUnitDropdownOptions() {
+            const clientFilter = document.getElementById('filter-client').value;
             const unitSelect = document.getElementById('filter-unit');
-            const currentSelected = unitSelect.value;
             
+            if (!unitSelect) return;
+            if (!fullDataCache || fullDataCache.length === 0) {
+                unitSelect.innerHTML = '<option value="ALL">Semua Unit</option>';
+                return;
+            }
+
+            const currentSelected = unitSelect.value;
             let units = new Set();
-            data.forEach(item => {
-                if(item.Unit_Number && item.Unit_Number !== "-") units.add(item.Unit_Number.toString().trim());
+            
+            fullDataCache.forEach(item => {
+                let clientStr = item.Client ? item.Client.toString() : "";
+                let matchesClient = (clientFilter === "ALL") || clientStr.toLowerCase().includes(clientFilter.toLowerCase());
+                
+                if (matchesClient && item.Unit_Number && item.Unit_Number !== "-") {
+                    units.add(item.Unit_Number.toString().trim());
+                }
             });
 
             unitSelect.innerHTML = '<option value="ALL">Semua Unit</option>';
             Array.from(units).sort().forEach(unit => {
                 let option = document.createElement('option');
-                option.value = unit; option.innerText = unit;
+                option.value = unit; 
+                option.innerText = unit;
                 unitSelect.appendChild(option);
             });
 
-            if(Array.from(units).includes(currentSelected)) unitSelect.value = currentSelected;
+            if (Array.from(units).includes(currentSelected)) {
+                unitSelect.value = currentSelected;
+            } else {
+                unitSelect.value = "ALL";
+            }
         }
 
         function renderDashboard(data) {
+            if (!data) return;
             document.getElementById('metric-total-po').innerText = data.length;
             document.getElementById('total-rows').innerText = data.length;
             
@@ -358,9 +384,10 @@
 
         function populateTable(data) {
             const tableBody = document.getElementById('po-table-body');
+            if (!tableBody) return;
             tableBody.innerHTML = "";
 
-            if(data.length === 0) {
+            if(!data || data.length === 0) {
                 tableBody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-slate-500">Tidak ada record data.</td></tr>`;
                 document.getElementById('displayed-rows').innerText = 0;
                 return;
@@ -424,7 +451,12 @@
             if(monthlyChartInstance) monthlyChartInstance.destroy();
             if(clientChartInstance) clientChartInstance.destroy();
 
-            const ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
+            const canvasMonthly = document.getElementById('monthlyChart');
+            const canvasClient = document.getElementById('clientChart');
+            
+            if(!canvasMonthly || !canvasClient) return;
+
+            const ctxMonthly = canvasMonthly.getContext('2d');
             monthlyChartInstance = new Chart(ctxMonthly, {
                 type: 'line',
                 data: {
@@ -441,7 +473,7 @@
                 }
             });
 
-            const ctxClient = document.getElementById('clientChart').getContext('2d');
+            const ctxClient = canvasClient.getContext('2d');
             clientChartInstance = new Chart(ctxClient, {
                 type: 'doughnut',
                 data: {
@@ -454,7 +486,8 @@
 
         function triggerPrint() {
             const now = new Date();
-            document.getElementById('print-date-timestamp').innerText = now.toLocaleString('id-ID', { dateStyle: 'long', timeStyle: 'medium' });
+            const timestampElem = document.getElementById('print-date-timestamp');
+            if (timestampElem) timestampElem.innerText = now.toLocaleString('id-ID', { dateStyle: 'long', timeStyle: 'medium' });
             window.print();
         }
     </script>
