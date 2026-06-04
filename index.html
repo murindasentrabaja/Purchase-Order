@@ -29,36 +29,62 @@
         /* 🔒 SCREEN LOGIN DIGITAL LUXURY AI */
         #login-overlay {
             background-image: 
-                radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.15) 0px, transparent 40%),
+                radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.15) 0px, transparent 40%),
                 radial-gradient(circle at 80% 70%, rgba(245, 158, 11, 0.15) 0px, transparent 45%),
-                linear-gradient(to bottom right, #0f172a, #1e1b4b);
+                linear-gradient(to bottom right, #0f172a, #064e3b);
         }
 
-        /* 🤖 LOGO AI LOGIN CANGGIH & MEMUKAU */
-        .login-ai-orb {
+        /* 🟢 IKON AI - GUMPALAN CAHAYA ELEGAN (LIGHT ORB) */
+        .energy-orb {
             position: relative;
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, #2e2a75 20%, #1e1b4b 100%);
-            border: 2px solid rgba(129, 140, 248, 0.6);
-            box-shadow: 0 0 35px rgba(99, 102, 241, 0.6), inset 0 0 20px rgba(99, 102, 241, 0.4);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            /* Pancaran dasar (glow) yang lembut */
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
+            z-index: 1;
         }
-        .login-ai-ring-1 {
-            position: absolute; width: 120%; height: 120%;
-            border: 2px dashed rgba(245, 158, 11, 0.5);
+
+        /* Rotasi aura cahaya terluar (blur effect) */
+        .energy-orb::before {
+            content: '';
+            position: absolute;
+            inset: -6px; /* Meluap ke luar untuk diburamkan */
             border-radius: 50%;
-            animation: spin-clockwise 16s linear infinite;
+            /* Gradasi kerucut halus tanpa warna padat */
+            background: conic-gradient(from 0deg, transparent 30%, rgba(52, 211, 153, 0.2) 60%, rgba(16, 185, 129, 0.6) 100%);
+            filter: blur(8px); /* Membuatnya menjadi gumpalan cahaya, bukan garis keras */
+            animation: spin-clockwise 3s linear infinite;
+            z-index: -1;
+            pointer-events: none;
         }
-        .login-ai-ring-2 {
-            position: absolute; width: 140%; height: 140%;
-            border: 1.5px dotted rgba(99, 102, 241, 0.4);
+
+        /* Inti cahaya yang berdetak (pulsing core) */
+        .energy-orb::after {
+            content: '';
+            position: absolute;
+            inset: 15%;
             border-radius: 50%;
-            animation: spin-counter 20s linear infinite;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(52, 211, 153, 0.6) 40%, transparent 80%);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.8), 0 0 15px rgba(52, 211, 153, 0.6);
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+            pointer-events: none;
         }
+        
+        /* Variasi ukuran sesuai tempatnya */
+        .login-ai-orb { width: 90px; height: 90px; }
+        .chat-header-orb { width: 36px; height: 36px; }
+        .chat-header-orb::after { inset: 20%; } /* Inti cahaya disesuaikan ukurannya */
+        .floating-orb { width: 52px; height: 52px; }
+        .floating-orb::after { inset: 18%; }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(0.85); opacity: 0.7; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+        @keyframes spin-clockwise { 100% { transform: rotate(360deg); } }
 
         /* 🎨 KARTU METRIK DENGAN EFEK HOVER PREMIUM */
         .gradient-border {
@@ -128,54 +154,36 @@
         /* 🤖 PURO AI - INTERFACE CHATROOM */
         .puro-card {
             background: linear-gradient(135deg, #f0fdfa 0%, #eff6ff 40%, #fef3c7 75%, #fae8ff 100%);
-            box-shadow: 0 12px 40px -5px rgba(79, 70, 229, 0.15), inset 0 1px 2.5px rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(147, 197, 253, 0.7); position: relative; overflow: hidden; color: #334155 !important;
+            box-shadow: 0 12px 40px -5px rgba(16, 185, 129, 0.15), inset 0 1px 2.5px rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(110, 231, 183, 0.7); position: relative; overflow: hidden; color: #334155 !important;
         }
         .puro-card::before {
             content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(79, 70, 229, 0.08) 0%, transparent 60%);
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
             animation: rotate-glow 20s linear infinite; pointer-events: none;
         }
         @keyframes rotate-glow { 100% { transform: rotate(360deg); } }
 
-        .ai-core-container {
-            position: relative; width: 70px; height: 70px;
-            background: radial-gradient(circle, #ffffff 40%, #e0e7ff 100%);
-            border: 2px solid #6366f1; box-shadow: 0 0 20px rgba(99, 102, 241, 0.4), inset 0 0 10px rgba(99, 102, 241, 0.2);
-            border-radius: 1.25rem; display: flex; align-items: center; justify-content: center; overflow: hidden;
-        }
-        .ai-pulse-ring {
-            position: absolute; width: 100%; height: 100%;
-            border: 2px dashed rgba(245, 158, 11, 0.6); border-radius: 1.25rem;
-            animation: spin-clockwise 12s linear infinite;
-        }
-        .ai-pulse-ring-inner {
-            position: absolute; width: 80%; height: 80%;
-            border: 1.5px dotted rgba(79, 70, 229, 0.7); border-radius: 50%;
-            animation: spin-counter 8s linear infinite;
-        }
-        @keyframes spin-clockwise { 100% { transform: rotate(360deg); } }
-        @keyframes spin-counter { 100% { transform: rotate(-360deg); } }
-
         .chat-bubble-puro {
-            background: rgba(255, 255, 255, 0.85); border: 1px solid rgba(99, 102, 241, 0.15);
+            background: rgba(255, 255, 255, 0.85); border: 1px solid rgba(16, 185, 129, 0.15);
             border-radius: 0px 16px 16px 16px; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
             animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .chat-bubble-user {
-            background: linear-gradient(135deg, #4f46e5, #4338ca); color: #ffffff !important;
-            border-radius: 16px 0px 16px 16px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+            background: linear-gradient(135deg, #059669, #047857); color: #ffffff !important;
+            border-radius: 16px 0px 16px 16px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
             animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        .chat-area-scroll { max-height: 280px; overflow-y: auto; padding-right: 4px; }
-
+        .chat-area-scroll { overflow-y: auto; padding-right: 4px; }
+        .chat-area-scroll::-webkit-scrollbar { width: 4px; }
+        
         .suggested-prompt-btn {
             background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(148, 163, 184, 0.3);
-            transition: all 0.2s ease; color: #4f46e5 !important; font-weight: 500;
+            transition: all 0.2s ease; color: #059669 !important; font-weight: 500;
         }
-        .suggested-prompt-btn:hover { background: #4f46e5; color: #ffffff !important; border-color: #4f46e5; transform: translateY(-1px); }
+        .suggested-prompt-btn:hover { background: #059669; color: #ffffff !important; border-color: #059669; transform: translateY(-1px); }
 
-        /* 📋 STRUKTUR TABEL INTERAKTIF ANTI-TUMPANG TINDIH */
+        /* 📋 STRUKTUR TABEL INTERAKTIF */
         .table-container { max-height: 520px; overflow-y: auto; position: relative; border-radius: 0.5rem; background-color: #ffffff; border: 1px solid #e2e8f0; width: 100%; }
         .custom-dashboard-table { table-layout: fixed; width: 100%; border-collapse: collapse; }
 
@@ -225,17 +233,14 @@
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-8">
+<body class="min-h-screen p-4 md:p-8 relative">
 
     <div id="login-overlay" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
         <div class="bg-white/90 backdrop-blur-xl border border-slate-200/50 w-full max-w-md rounded-2xl shadow-2xl p-8 space-y-6 text-center transition-all duration-300">
             
             <div class="flex justify-center pt-4 pb-2">
-                <div class="login-ai-orb">
-                    <div class="login-ai-ring-1"></div>
-                    <div class="login-ai-ring-2"></div>
-                    <i class="fa-solid fa-atom text-4xl text-indigo-400 animate-pulse z-10"></i>
-                </div>
+                <!-- Bola Gumpalan Cahaya AI di Login -->
+                <div class="energy-orb login-ai-orb"></div>
             </div>
 
             <div>
@@ -248,7 +253,7 @@
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">User Name</label>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-user text-sm"></i></span>
-                        <input type="text" id="login-username" required placeholder="Masukkan Username" class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-indigo-500">
+                        <input type="text" id="login-username" required placeholder="Masukkan Username" class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-emerald-500">
                     </div>
                 </div>
 
@@ -256,7 +261,7 @@
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Kata Sandi</label>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-lock text-sm"></i></span>
-                        <input type="password" id="login-password" required placeholder="••••••" class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-indigo-500">
+                        <input type="password" id="login-password" required placeholder="••••••" class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-emerald-500">
                     </div>
                 </div>
 
@@ -265,7 +270,7 @@
                     <span>Username atau Kata Sandi salah!</span>
                 </div>
 
-                <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-semibold text-sm py-3 rounded-lg shadow-md transition transform active:scale-95 flex items-center justify-center space-x-2">
+                <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800 text-white font-semibold text-sm py-3 rounded-lg shadow-md transition transform active:scale-95 flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-shield-halved"></i>
                     <span>Masuk Sistem MSB</span>
                 </button>
@@ -293,15 +298,18 @@
             </div>
             
             <div class="mt-5 md:mt-0 flex flex-wrap items-center gap-4">
-                <div class="flex items-center space-x-3 bg-slate-50 border border-slate-200 rounded-xl p-2 pr-4 shadow-inner">
-                    <div class="relative w-10 h-10 flex items-center justify-center bg-gradient-to-tr from-amber-500 to-indigo-600 rounded-lg text-white shadow-md animate-pulse">
-                        <i class="fa-solid fa-brain text-sm absolute"></i>
-                        <i class="fa-solid fa-circle-notch text-lg animate-[spin_3s_linear_infinite] opacity-40"></i>
+                
+                <!-- Desain Sinkronisasi Elegan -->
+                <div class="flex items-center space-x-4 bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-2xl p-2.5 pr-6 shadow-sm hover:shadow-md transition-all duration-300">
+                    <div class="relative w-10 h-10 flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl shadow-lg border border-slate-700 overflow-hidden">
+                        <i class="fa-solid fa-satellite-dish text-emerald-400 text-sm absolute z-10"></i>
+                        <div class="absolute inset-0 border border-emerald-500/30 rounded-xl animate-pulse"></div>
+                        <div class="absolute w-[200%] h-[200%] bg-[conic-gradient(from_0deg,transparent_0_340deg,rgba(52,211,153,0.3)_360deg)] animate-[spin_3s_linear_infinite] -top-1/2 -left-1/2"></div>
                     </div>
                     <div class="text-left">
-                        <p class="text-[10px] font-bold text-indigo-600 tracking-widest uppercase">MSB System Link</p>
-                        <p id="sync-status" class="text-xs font-semibold text-emerald-600 flex items-center">
-                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full inline-block mr-1.5 animate-ping"></span>Online
+                        <p class="text-[10px] font-bold text-slate-500 tracking-[0.15em] uppercase">System Sync</p>
+                        <p id="sync-status" class="text-xs font-semibold text-emerald-600 flex items-center mt-0.5">
+                            <span class="w-2 h-2 bg-emerald-500 rounded-full inline-block mr-2 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></span>Online
                         </p>
                     </div>
                 </div>
@@ -337,59 +345,6 @@
                 <p class="text-sm font-medium uppercase tracking-wider">Total Terkirim</p>
                 <h3 id="metric-delivered" class="text-3xl font-bold text-emerald-600 mt-1">0</h3>
                 <p class="text-xs mt-1">Order Telah Selesai</p>
-            </div>
-        </div>
-
-        <div class="puro-card rounded-2xl p-5 md:p-6 no-print">
-            <div class="absolute -top-10 -right-10 opacity-5 pointer-events-none">
-                <i class="fa-solid fa-comments text-[160px] text-indigo-900"></i>
-            </div>
-
-            <div class="flex flex-col gap-4">
-                <div class="flex items-center justify-between pb-3 border-b border-indigo-200/40">
-                    <div class="flex items-center space-x-4">
-                        <div class="ai-core-container">
-                            <div class="ai-pulse-ring"></div>
-                            <div class="ai-pulse-ring-inner"></div>
-                            <i class="fa-solid fa-robot text-2xl text-indigo-600 z-10 animate-bounce"></i>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <h3 class="text-lg font-bold text-slate-900">Puro Chatbot AI</h3>
-                                <span class="text-[9px] font-mono font-bold bg-indigo-600 text-white px-2 py-0.5 rounded shadow-sm">Kecerdasan MSB v2.5</span>
-                            </div>
-                            <p class="text-xs text-slate-500 font-medium">Asisten Interaktif Purchase Order MSB</p>
-                        </div>
-                    </div>
-                    <button onclick="clearChatLog()" class="text-xs font-semibold text-slate-500 hover:text-rose-600 transition p-1 px-2 rounded hover:bg-slate-100">
-                        <i class="fa-solid fa-trash-can mr-1"></i> Clear Chat
-                    </button>
-                </div>
-
-                <div id="puro-chat-history" class="chat-area-scroll space-y-3 pr-2 min-h-[160px]">
-                    <div class="chat-bubble-puro p-3.5 max-w-[85%]">
-                        <p class="text-xs font-bold text-indigo-600 mb-1"><i class="fa-solid fa-microchip mr-1"></i> PURO AI Result:</p>
-                        <p class="text-sm leading-relaxed text-slate-700">Halo! Saya **Puro AI**, modul kecerdasan buatan sistem ERP Murinda Sentra Baja. Silakan lakukan live-chat langsung dengan saya untuk menanyakan apapun isi laporan data di dalam file HTML ini!</p>
-                    </div>
-                </div>
-
-                <div class="flex flex-wrap gap-2 pt-1" id="puro-suggestions">
-                    <button onclick="sendQuickPrompt('Ringkasan statistik data saat ini')" class="suggested-prompt-btn px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm"><i class="fa-solid fa-chart-pie mr-1"></i> Ringkasan Utama</button>
-                    <button onclick="sendQuickPrompt('Cek unit yang pending / belum terkirim')" class="suggested-prompt-btn px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm"><i class="fa-solid fa-clock mr-1"></i> Analisis Bottleneck Pending</button>
-                    <button onclick="sendQuickPrompt('Bagaimana distribusi pesanan Komatsu vs Sumitomo')" class="suggested-prompt-btn px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm"><i class="fa-solid fa-truck-ramp-box mr-1"></i> Komatsu vs Sumitomo</button>
-                </div>
-
-                <div class="pt-2 border-t border-slate-200/60">
-                    <div class="flex gap-2 items-center">
-                        <div class="relative flex-1">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-indigo-500"><i class="fa-solid fa-comment-dots"></i></span>
-                            <input type="text" id="puro-chat-input" onkeydown="if(event.key === 'Enter') handleUserChatSubmit()" placeholder="Tanyakan isi tabel data (Contoh: 'Berapa PO Komatsu di bulan Mei?', 'Cari PO-2026-004')" class="w-full pl-10 pr-4 py-3 bg-white border border-slate-300 rounded-xl text-sm text-slate-800 placeholder-slate-400 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
-                        </div>
-                        <button onclick="handleUserChatSubmit()" class="bg-indigo-600 hover:bg-indigo-700 text-white w-12 h-12 rounded-xl shadow-md flex items-center justify-center transition active:scale-95 flex-shrink-0">
-                            <i class="fa-solid fa-paper-plane text-sm"></i>
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -483,6 +438,62 @@
         </div>
     </div>
 
+    <!-- Ikon Tombol AI Melayang - Gumpalan Cahaya -->
+    <button onclick="togglePuroChat()" class="fixed bottom-8 right-8 z-[100] hover:scale-110 transition-transform duration-300 no-print group">
+        <div class="energy-orb floating-orb"></div>
+    </button>
+
+    <div id="puro-chat-container" class="fixed bottom-24 right-8 w-[350px] max-w-[calc(100vw-2rem)] z-[100] hidden opacity-0 translate-y-4 transition-all duration-300 ease-out no-print">
+        <div class="puro-card rounded-2xl p-5 shadow-2xl border border-emerald-200">
+            <div class="absolute -top-10 -right-10 opacity-5 pointer-events-none">
+                <i class="fa-solid fa-comments text-[160px] text-emerald-900"></i>
+            </div>
+
+            <div class="flex flex-col gap-4 relative z-10">
+                <div class="flex items-center justify-between pb-3 border-b border-emerald-200/40">
+                    <div class="flex items-center space-x-3">
+                        <div class="energy-orb chat-header-orb"></div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-sm font-bold text-slate-900">Puro AI</h3>
+                                <span class="text-[8px] font-mono font-bold bg-emerald-600 text-white px-1.5 py-0.5 rounded shadow-sm">v2.5</span>
+                            </div>
+                            <p class="text-[9px] text-slate-500 font-medium">Asisten Interaktif MSB</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <button onclick="clearChatLog()" class="text-xs text-slate-400 hover:text-rose-600 transition p-1.5 rounded hover:bg-rose-50" title="Bersihkan Chat">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                        <button onclick="togglePuroChat()" class="text-xs text-slate-400 hover:text-slate-800 transition p-1.5 rounded hover:bg-slate-100" title="Tutup Chat">
+                            <i class="fa-solid fa-xmark text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="puro-chat-history" class="chat-area-scroll space-y-3 pr-2 min-h-[180px] max-h-[250px]">
+                    </div>
+
+                <div class="flex flex-wrap gap-1.5 pt-1" id="puro-suggestions">
+                    <button onclick="sendQuickPrompt('Ringkasan statistik data saat ini')" class="suggested-prompt-btn px-2 py-1 rounded-md text-[10px] font-medium shadow-sm"><i class="fa-solid fa-chart-pie mr-1"></i> Ringkasan Utama</button>
+                    <button onclick="sendQuickPrompt('Cek unit yang pending')" class="suggested-prompt-btn px-2 py-1 rounded-md text-[10px] font-medium shadow-sm"><i class="fa-solid fa-clock mr-1"></i> Cek Pending</button>
+                </div>
+
+                <div class="pt-2 border-t border-slate-200/60">
+                    <div class="flex gap-2 items-center">
+                        <div class="relative flex-1">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-2.5 text-emerald-600"><i class="fa-solid fa-comment-dots text-xs"></i></span>
+                            <input type="text" id="puro-chat-input" onkeydown="if(event.key === 'Enter') handleUserChatSubmit()" placeholder="Tanya AI..." class="w-full pl-8 pr-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500">
+                        </div>
+                        <button onclick="handleUserChatSubmit()" class="bg-emerald-600 hover:bg-emerald-700 text-white w-9 h-9 rounded-lg shadow-md flex items-center justify-center transition active:scale-95 flex-shrink-0">
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzAI-XF8IfvlqqQzDAGwd4ddN91kS8Bsstw04uHLoIuk4iuTMHwjL07_fsX7rOklFiGqg/exec";
 
@@ -494,6 +505,24 @@
             document.getElementById('copyright-year').innerText = new Date().getFullYear();
         });
 
+        /* 🤖 LOGIKA TOGGLE FLOATING PURO AI */
+        function togglePuroChat() {
+            const chatContainer = document.getElementById('puro-chat-container');
+            if (chatContainer.classList.contains('hidden')) {
+                chatContainer.classList.remove('hidden');
+                setTimeout(() => {
+                    chatContainer.classList.remove('opacity-0', 'translate-y-4');
+                    chatContainer.classList.add('opacity-100', 'translate-y-0');
+                }, 10);
+            } else {
+                chatContainer.classList.remove('opacity-100', 'translate-y-0');
+                chatContainer.classList.add('opacity-0', 'translate-y-4');
+                setTimeout(() => {
+                    chatContainer.classList.add('hidden');
+                }, 300);
+            }
+        }
+
         /* 🔒 LOGIKA VERIFIKASI LOGIN CREDENTIALS */
         function verifySystemLogin(event) {
             event.preventDefault();
@@ -501,11 +530,9 @@
             const passInp = document.getElementById('login-password').value.trim();
             const errorMsg = document.getElementById('login-error-msg');
 
-            // Cocokkan dengan akun bapak Aspuro
-            if (userInp === "Aspuro" && passInp === "020109") {
+            if (userInp === "Kalijati" && passInp === "113300") {
                 errorMsg.classList.add('hidden');
                 document.getElementById('login-overlay').classList.add('hidden');
-                // Panggil loader database setelah sukses login
                 fetchData();
                 setInterval(fetchData, 300000);
             } else {
@@ -541,8 +568,8 @@
             
             if (refreshIcon) refreshIcon.classList.add('fa-spin');
             if (syncStatus) {
-                syncStatus.className = "text-xs font-semibold text-amber-600 flex items-center";
-                syncStatus.innerHTML = `<span class="w-1.5 h-1.5 bg-amber-500 rounded-full inline-block mr-1.5 animate-spin"></span>Syncing...`;
+                syncStatus.className = "text-xs font-semibold text-amber-600 flex items-center mt-0.5";
+                syncStatus.innerHTML = `<span class="w-2 h-2 bg-amber-500 rounded-full inline-block mr-2 shadow-[0_0_8px_rgba(245,158,11,0.8)] animate-spin"></span>Syncing...`;
             }
 
             fetch(APPS_SCRIPT_URL)
@@ -558,16 +585,16 @@
                     renderDashboard(fullDataCache);
                     initPuroInitialGreeting(); 
                     if (syncStatus) {
-                        syncStatus.className = "text-xs font-semibold text-emerald-600 flex items-center";
-                        syncStatus.innerHTML = `<span class="w-1.5 h-1.5 bg-emerald-500 rounded-full inline-block mr-1.5 animate-ping"></span>Online`;
+                        syncStatus.className = "text-xs font-semibold text-emerald-600 flex items-center mt-0.5";
+                        syncStatus.innerHTML = `<span class="w-2 h-2 bg-emerald-500 rounded-full inline-block mr-2 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></span>Online`;
                     }
                     if (refreshIcon) refreshIcon.classList.remove('fa-spin');
                 })
                 .catch(error => {
                     console.error("Gagal sinkronisasi:", error);
                     if (syncStatus) {
-                        syncStatus.className = "text-xs font-semibold text-rose-600 flex items-center";
-                        syncStatus.innerHTML = `<span class="w-1.5 h-1.5 bg-rose-500 rounded-full inline-block mr-1.5"></span>Offline`;
+                        syncStatus.className = "text-xs font-semibold text-rose-600 flex items-center mt-0.5";
+                        syncStatus.innerHTML = `<span class="w-2 h-2 bg-rose-500 rounded-full inline-block mr-2 shadow-[0_0_8px_rgba(244,63,94,0.8)]"></span>Offline`;
                     }
                     if (refreshIcon) refreshIcon.classList.remove('fa-spin');
                 });
@@ -585,10 +612,10 @@
 
             chatHistory.innerHTML = `
                 <div class="chat-bubble-puro p-3.5 max-w-[90%]">
-                    <p class="text-xs font-bold text-indigo-600 mb-1"><i class="fa-solid fa-microchip mr-1"></i> PURO AI Core:</p>
-                    <p class="text-sm leading-relaxed text-slate-700">
+                    <p class="text-xs font-bold text-emerald-600 mb-1"><i class="fa-solid fa-microchip mr-1"></i> PURO AI Core:</p>
+                    <p class="text-[11px] leading-relaxed text-slate-700">
                         Otentikasi berhasil! Selamat datang Rekan **MSB Kalijati**. Saya mendeteksi ada **${total} data PO aktif** saat ini dengan tingkat kesuksesan pengiriman sebesar **${rate}%**.
-                        <br><br>Ada yang bisa saya bantu jawab mengenai isi data di atas secara live? Ketikkan pertanyaan Anda di bawah!
+                        <br><br>Ada yang bisa saya bantu jawab mengenai isi data?
                     </p>
                 </div>
             `;
@@ -619,11 +646,11 @@
             loadingBubble.id = loadingId;
             loadingBubble.className = "chat-bubble-puro p-3 max-w-[80%]";
             loadingBubble.innerHTML = `
-                <p class="text-xs font-bold text-indigo-600 mb-1"><i class="fa-solid fa-atom animate-spin mr-1"></i> Puro memproses data...</p>
+                <p class="text-xs font-bold text-emerald-600 mb-1"><i class="fa-solid fa-atom animate-spin mr-1"></i> Puro memproses...</p>
                 <div class="flex space-x-1.5 py-1">
-                    <div class="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
-                    <div class="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
-                    <div class="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
                 </div>
             `;
             chatHistory.appendChild(loadingBubble);
@@ -642,12 +669,12 @@
             
             if(sender === 'user') {
                 bubble.className = "chat-bubble-user p-3 ml-auto max-w-[85%] text-right";
-                bubble.innerHTML = `<p class="text-sm font-medium leading-relaxed">${text}</p>`;
+                bubble.innerHTML = `<p class="text-[11px] font-medium leading-relaxed">${text}</p>`;
             } else {
                 bubble.className = "chat-bubble-puro p-3.5 max-w-[90%]";
                 bubble.innerHTML = `
-                    <p class="text-xs font-bold text-indigo-600 mb-1"><i class="fa-solid fa-microchip mr-1"></i> PURO AI Core:</p>
-                    <p class="text-sm leading-relaxed text-slate-700">${text}</p>
+                    <p class="text-xs font-bold text-emerald-600 mb-1"><i class="fa-solid fa-microchip mr-1"></i> PURO AI Core:</p>
+                    <p class="text-[11px] leading-relaxed text-slate-700">${text}</p>
                 `;
             }
             chatHistory.appendChild(bubble);
@@ -688,14 +715,14 @@
             if(query.includes("pending") || query.includes("belum") || query.includes("tertahan") || query.includes("bottleneck")) {
                 let textRes = `Ditemukan <strong>${pendingList.length} unit tertahan (Pending)</strong>.<br>Berikut rincian beberapa unit teratas:<br><ul class="list-disc pl-4 mt-1 space-y-1">`;
                 pendingList.slice(0, 5).forEach(item => {
-                    textRes += `<li>PO: <strong>${item.PO_Number}</strong> | Unit: ${item.Unit_Number} (${item.Client || 'N/A'})</li>`;
+                    textRes += `<li>PO: <strong>${item.PO_Number}</strong> | Unit: ${item.Unit_Number}</li>`;
                 });
                 textRes += `</ul>`;
                 return textRes;
             }
 
             if(query.includes("komatsu")) {
-                return `Analisis <strong>PT Komatsu Indonesia</strong>:<br> Total pesanan berjumlah <strong>${komatsu} PO</strong>. Gunakan filter pada tabel untuk melihat detail nomor seri unit part.`;
+                return `Analisis <strong>PT Komatsu Indonesia</strong>:<br> Total pesanan berjumlah <strong>${komatsu} PO</strong>.`;
             }
 
             if(query.includes("sumitomo")) {
@@ -717,7 +744,7 @@
                 • <strong>Status Pengiriman:</strong> <span class="font-bold ${getCleanStatus(match.Status)==='Terkirim'?'text-emerald-600':'text-amber-600'}">${getCleanStatus(match.Status)}</span>`;
             }
 
-            return "Maaf, Puro AI belum memahami instruksi Anda secara detail. Coba masukkan kata kunci pencarian seperti 'Pending', 'Komatsu', 'Sumitomo', atau langsung ketik nomor PO.";
+            return "Maaf, Puro AI belum memahami instruksi Anda. Coba masukkan kata kunci pencarian seperti 'Pending', 'Komatsu', atau langsung ketik nomor PO.";
         }
 
         function updateUnitDropdownOptions() {
