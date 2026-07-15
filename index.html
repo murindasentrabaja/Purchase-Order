@@ -29,7 +29,7 @@
 
         /* 🔒 SCREEN LOGIN BACKGROUND PUTIH BERSIH */
         #login-overlay {
-            background-color: #ffffff; /* Background diubah menjadi putih bersih */
+            background-color: #ffffff; 
             transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
         }
 
@@ -45,7 +45,7 @@
 
         .login-card {
             position: relative;
-            width: 800px; /* Diperlebar agar teks muat 1 baris */
+            width: 800px; 
             height: 380px;
             display: flex;
             align-items: center;
@@ -104,7 +104,7 @@
         .login-card .content {
             position: relative;
             z-index: 10;
-            max-width: 420px; /* Diperlebar agar judul sejajar */
+            max-width: 420px; 
             opacity: 0;
             visibility: hidden;
             transform: translateX(-50px);
@@ -125,7 +125,7 @@
             letter-spacing: 1px;
             line-height: 1.1em;
             margin-bottom: 12px;
-            white-space: nowrap; /* Teks dipaksa satu baris (tidak turun) */
+            white-space: nowrap; 
         }
 
         .login-card .content p {
@@ -140,7 +140,6 @@
             color: #ffcccc; 
         }
 
-        /* Tombol Login Sistem Berfungsi */
         .login-card .content button {
             display: inline-block;
             padding: 10px 25px;
@@ -181,7 +180,7 @@
 
         .login-card:hover .factory_img {
             top: 50%;
-            left: 75%; /* Penyesuaian tata letak pabrik ke kanan */
+            left: 75%; 
             transform: translate(-50%, -50%) scale(1);
             transition-delay: 0.2s;
         }
@@ -407,13 +406,63 @@
         </div>
     </div>
 
+    <div id="po-login-modal" class="fixed inset-0 z-[150] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-lock text-sky-600"></i>
+                    <h3 class="text-lg font-bold text-slate-800">Autentikasi Sistem PO</h3>
+                </div>
+                <button onclick="closePOLogin()" class="text-slate-400 hover:text-rose-500 transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="space-y-4 mt-2">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Pilih Username</label>
+                    <select id="po-username" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-200 cursor-pointer shadow-sm">
+                        <option value="">-- Silakan Pilih User --</option>
+                        <option value="Aspuro">Aspuro</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Password</label>
+                    <input type="password" id="po-password" placeholder="Masukkan password" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-200 shadow-sm">
+                </div>
+                <div id="po-login-error" class="hidden text-rose-600 text-sm font-medium bg-rose-50 border border-rose-200 p-2 rounded-lg flex items-center gap-2">
+                    <i class="fa-solid fa-circle-exclamation"></i> Username atau Password tidak valid!
+                </div>
+                <button onclick="submitPOLogin()" class="w-full bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white font-bold py-2.5 rounded-lg shadow-md transition-all transform active:scale-95 mt-2">
+                    Login & Buka Sistem
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="po-iframe-container" class="hidden fixed inset-0 z-[90] bg-slate-50 flex-col">
+        <div class="bg-white border-b border-slate-200 p-4 flex justify-between items-center shadow-sm h-[72px]">
+            <div class="flex items-center space-x-3">
+                <div class="bg-slate-100 p-2 rounded-lg border border-slate-200 shadow-inner">
+                    <img src="MSB Logo.png" alt="Murinda Logo" style="height: 24px;" onerror="this.src='https://via.placeholder.com/80x24?text=MSB'">
+                </div>
+                <div>
+                    <h2 class="font-bold text-slate-800 text-lg leading-tight">Database PO Eksternal</h2>
+                    <p class="text-xs text-emerald-600 font-semibold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Terhubung</p>
+                </div>
+            </div>
+            <button onclick="closePOSystem()" class="bg-rose-500 hover:bg-rose-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-2 shadow-sm transition hover:shadow-md transform active:scale-95">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Kembali ke Dashboard</span>
+            </button>
+        </div>
+        <iframe id="po-iframe" src="" class="w-full flex-1 border-none bg-slate-100 shadow-inner"></iframe>
+    </div>
+
     <div class="print-header">
         <h1 style="font-size: 24px; font-weight: bold; margin: 0; color: #000;">PT MURINDA SENTRA BAJA</h1>
         <p style="font-size: 14px; margin: 5px 0 0 0; text-transform: uppercase; letter-spacing: 1px; color: #000; font-weight: bold;">Purchase Order Delivery Report - Executive Summary</p>
         <p style="font-size: 11px; color: #333; margin: 2px 0;">Dicetak otomatis melalui MSB ERP Sistem pada: <span id="print-date-timestamp"></span></p>
     </div>
 
-    <div class="max-w-7xl mx-auto space-y-6">
+    <div id="main-dashboard-content" class="max-w-7xl mx-auto space-y-6">
         
         <header class="flex flex-col md:flex-row justify-between items-start md:items-center p-6 bg-white rounded-xl border border-slate-200/80 backdrop-blur-md shadow-sm no-print">
             <div class="title-logo-area">
@@ -426,7 +475,7 @@
                 </div>
             </div>
             
-            <div class="mt-5 md:mt-0 flex flex-wrap items-center gap-4">
+            <div class="mt-5 md:mt-0 flex flex-wrap items-center gap-3">
                 
                 <div class="flex items-center space-x-4 bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-2xl p-2.5 pr-6 shadow-sm hover:shadow-md transition-all duration-300">
                     <div class="relative w-10 h-10 flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl shadow-lg border border-slate-700 overflow-hidden">
@@ -441,6 +490,11 @@
                         </p>
                     </div>
                 </div>
+
+                <button onclick="openPOLogin()" class="btn-animate bg-sky-600 hover:bg-sky-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center space-x-2 shadow-md border border-sky-500">
+                    <i class="fa-solid fa-server"></i>
+                    <span>Masuk Sistem PO</span>
+                </button>
 
                 <button onclick="triggerPrint()" class="cyber-print-btn px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center space-x-2">
                     <i class="fa-solid fa-print"></i>
@@ -566,7 +620,7 @@
         </div>
     </div>
 
-    <button onclick="togglePuroChat()" class="fixed bottom-8 right-8 z-[100] hover:scale-110 transition-transform duration-300 no-print group">
+    <button id="puro-ai-trigger" onclick="togglePuroChat()" class="fixed bottom-8 right-8 z-[100] hover:scale-110 transition-transform duration-300 no-print group">
         <div class="energy-orb floating-orb"></div>
     </button>
 
@@ -663,6 +717,81 @@
             fetchData();
             setInterval(fetchData, 300000);
         }
+
+        /* ==================================================
+           🔐 LOGIKA SISTEM PO EKSTERNAL (MODAL & IFRAME)
+           ================================================== */
+        
+        function openPOLogin() {
+            const modal = document.getElementById('po-login-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 10);
+            
+            // Reset input form
+            document.getElementById('po-username').value = "";
+            document.getElementById('po-password').value = "";
+            document.getElementById('po-login-error').classList.add('hidden');
+        }
+
+        function closePOLogin() {
+            const modal = document.getElementById('po-login-modal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function submitPOLogin() {
+            const user = document.getElementById('po-username').value;
+            const pass = document.getElementById('po-password').value;
+            const errorMsg = document.getElementById('po-login-error');
+
+            // Cek Kredensial (Aspuro & 020109)
+            if (user === 'Aspuro' && pass === '020109') {
+                errorMsg.classList.add('hidden');
+                closePOLogin();
+                openPOSystem();
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        function openPOSystem() {
+            // Sembunyikan konten dashboard utama dan Puro AI
+            document.getElementById('main-dashboard-content').classList.add('hidden');
+            document.getElementById('puro-ai-trigger').classList.add('hidden');
+            document.getElementById('puro-chat-container').classList.add('hidden'); // Memastikan chat tertutup
+            
+            // Tampilkan container iframe fullscreen
+            const container = document.getElementById('po-iframe-container');
+            container.classList.remove('hidden');
+            container.classList.add('flex');
+            
+            // Muat URL jika iframe masih kosong
+            const iframe = document.getElementById('po-iframe');
+            if (!iframe.src || iframe.src === window.location.href) {
+                iframe.src = "https://murindasentrabaja.github.io/Data-PO/";
+            }
+        }
+
+        function closePOSystem() {
+            // Sembunyikan iframe container
+            const container = document.getElementById('po-iframe-container');
+            container.classList.add('hidden');
+            container.classList.remove('flex');
+            
+            // Tampilkan kembali konten dashboard utama dan Puro AI
+            document.getElementById('main-dashboard-content').classList.remove('hidden');
+            document.getElementById('puro-ai-trigger').classList.remove('hidden');
+        }
+        
+        /* ================================================== */
 
         function formatToShortDate(dateStr) {
             if (!dateStr || dateStr === "-" || dateStr.trim() === "") return "-";
