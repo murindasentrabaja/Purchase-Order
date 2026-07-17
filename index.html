@@ -33,43 +33,42 @@
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.9); }
 
         /* ==========================================
-           LIQUID GLASS EFFECT (3D & REFLECTIONS)
+           LIQUID GLASS EFFECT (GRADIENT BORDER PADA HOVER)
            ========================================== */
         .glass-panel {
             background: rgba(255, 255, 255, 0.45);
             backdrop-filter: blur(16px) saturate(140%);
             -webkit-backdrop-filter: blur(16px) saturate(140%);
-            border-top: 1px solid rgba(255, 255, 255, 0.9);
-            border-left: 1px solid rgba(255, 255, 255, 0.9);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 1.25rem;
             box-shadow: 
                 0 10px 30px 0 rgba(31, 38, 135, 0.1),
                 inset 0 2px 5px rgba(255, 255, 255, 0.8),
                 inset 0 -2px 5px rgba(0, 0, 0, 0.02);
             position: relative;
-            overflow: hidden;
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             color: #334155;
         }
 
-        /* 3D Reflection Effect on Hover */
-        .glass-panel::before {
+        /* Gradient Ring Animasi untuk Panel Summary */
+        .glass-panel-hover::after {
             content: '';
             position: absolute;
-            top: 0; left: -150%;
-            width: 60%; height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg);
-            transition: 0.6s ease;
-            z-index: 10;
+            inset: -1px; /* Melebar 1px agar menutupi border asli */
+            border-radius: inherit;
+            padding: 2px; /* Ketebalan garis gradasi */
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #e879f9); /* Gradasi Sky-Indigo-Pink */
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
             pointer-events: none;
+            z-index: 10;
         }
 
-        .glass-panel-hover:hover::before {
-            left: 150%;
-            transition: 0.6s ease-in-out;
+        .glass-panel-hover:hover::after {
+            opacity: 1;
         }
 
         .glass-panel-hover:hover {
@@ -78,7 +77,6 @@
                 0 20px 40px 0 rgba(31, 38, 135, 0.15),
                 inset 0 3px 6px rgba(255, 255, 255, 0.9);
             background: rgba(255, 255, 255, 0.55);
-            border-color: rgba(255, 255, 255, 1);
         }
 
         .glass-panel-hover:active {
@@ -92,26 +90,34 @@
         .glass-btn {
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(8px);
-            border-top: 1px solid rgba(255,255,255,0.9);
-            border-left: 1px solid rgba(255,255,255,0.9);
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            border-right: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.7);
             box-shadow: 0 4px 15px rgba(0,0,0,0.05), inset 0 2px 4px rgba(255,255,255,0.8);
             color: #1e293b;
             position: relative;
-            overflow: hidden;
             transition: all 0.3s ease;
         }
+
+        /* Gradient Ring Animasi untuk Tombol */
         .glass-btn::after {
             content: '';
             position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.7), rgba(255,255,255,0));
-            transform: skewX(-20deg);
-            transition: 0.5s;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #e879f9);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 10;
         }
-        .glass-btn:hover::after { left: 150%; }
+
+        .glass-btn:hover::after { 
+            opacity: 1; 
+        }
+
         .glass-btn:hover {
             transform: translateY(-2px);
             background: rgba(255, 255, 255, 0.7);
@@ -126,10 +132,7 @@
         .glass-btn-primary {
             background: rgba(56, 189, 248, 0.4);
             color: #0c4a6e;
-            border-top: 1px solid rgba(255,255,255,0.9);
-            border-left: 1px solid rgba(255,255,255,0.9);
-            border-bottom: 1px solid rgba(56, 189, 248, 0.4);
-            border-right: 1px solid rgba(56, 189, 248, 0.4);
+            border: 1px solid rgba(56, 189, 248, 0.5);
         }
         .glass-btn-primary:hover {
             background: rgba(56, 189, 248, 0.6);
@@ -244,7 +247,7 @@
             body { background: #ffffff !important; color: #000000 !important; }
             header, .no-print, button, select, input, .chart-container-parent, #puro-chat-container { display: none !important; }
             .glass-panel { background: none !important; border: 1px solid #cbd5e1 !important; box-shadow: none !important; }
-            .glass-panel::before { display: none !important; }
+            .glass-panel::before, .glass-panel::after { display: none !important; }
             table { width: 100% !important; border: 1px solid #94a3b8 !important; color: #000000 !important; }
             .print-header { display: block !important; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000000; padding-bottom: 10px; }
         }
@@ -540,7 +543,6 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('copyright-year').innerText = new Date().getFullYear();
-            // Inisiasi data langsung tanpa login overlay
             fetchData();
             setInterval(fetchData, 300000);
         });
@@ -927,7 +929,6 @@
             const canvasMonthly = document.getElementById('monthlyChart'); const canvasClient = document.getElementById('clientChart');
             if(!canvasMonthly || !canvasClient) return;
 
-            // Updated chart colors to fit pastel glass theme
             Chart.defaults.color = '#475569';
             Chart.defaults.font.family = "'Inter', sans-serif";
 
