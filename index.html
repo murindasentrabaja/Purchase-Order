@@ -11,178 +11,147 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* 🎨 LATAR BELAKANG PUTIH GRADASI MEWAH UNTUK DASHBOARD */
+        /* 🎨 LATAR BELAKANG KALEM (PASTEL GRADIENT) */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.12) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(249, 115, 22, 0.12) 0px, transparent 50%),
-                radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.12) 0px, transparent 50%);
-            background-attachment: fixed;
-            color: #0f172a;
+            background: linear-gradient(-45deg, #e0eafc, #cfdef3, #e6e9f0, #eef1f5);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #1e293b;
+            min-height: 100vh;
         }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #f59e0b; }
 
-        /* 🔒 SCREEN LOGIN BACKGROUND PUTIH BERSIH */
-        #login-overlay {
-            background-color: #ffffff; 
-            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
+
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.6); border-radius: 10px; border: 1px solid rgba(255,255,255,0.8); }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.9); }
 
         /* ==========================================
-           DESAIN KARTU LOGIN INTERAKTIF
+           LIQUID GLASS EFFECT (3D & REFLECTIONS)
            ========================================== */
-        .login-wrapper {
-            transform: scale(1);
-            transition: transform 0.3s ease;
-        }
-        @media (max-width: 768px) { .login-wrapper { transform: scale(0.8); } }
-        @media (max-width: 500px) { .login-wrapper { transform: scale(0.55); } }
-
-        .login-card {
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            border-top: 1px solid rgba(255, 255, 255, 0.9);
+            border-left: 1px solid rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 1.25rem;
+            box-shadow: 
+                0 10px 30px 0 rgba(31, 38, 135, 0.1),
+                inset 0 2px 5px rgba(255, 255, 255, 0.8),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.02);
             position: relative;
-            width: 800px; 
-            height: 380px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding-left: 50px;
-            background: transparent;
-            border-radius: 20px;
-            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            color: #334155;
         }
 
-        .login-card .circle {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .login-card .circle::before {
+        /* 3D Reflection Effect on Hover */
+        .glass-panel::before {
             content: '';
             position: absolute;
-            width: 220px; 
-            height: 220px;
-            background: transparent;
-            border: 5px solid var(--clr);
-            box-shadow: 0 0 20px rgba(26, 79, 156, 0.3);
-            border-radius: 50%;
-            transition: 0.5s ease-in-out;
-        }
-
-        .login-card .circle .logo_img {
-            max-width: 180px;
-            z-index: 12;
-            transition: 0.4s ease-in-out;
-        }
-
-        .login-card:hover .circle::before {
-            width: 100%;
-            height: 100%;
-            border-radius: 20px;
-            background: var(--clr);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
-            border: 0px solid transparent;
-        }
-
-        .login-card:hover .circle .logo_img {
-            opacity: 0;
-            transform: scale(0.5);
-        }
-
-        .login-card .content {
-            position: relative;
+            top: 0; left: -150%;
+            width: 60%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            transition: 0.6s ease;
             z-index: 10;
-            max-width: 420px; 
-            opacity: 0;
-            visibility: hidden;
-            transform: translateX(-50px);
-            transition: 0.5s ease-in-out;
-        }
-
-        .login-card:hover .content {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(0);
-            transition-delay: 0.3s;
-        }
-
-        .login-card .content h2 {
-            color: #fff;
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            line-height: 1.1em;
-            margin-bottom: 12px;
-            white-space: nowrap; 
-        }
-
-        .login-card .content p {
-            color: #fff;
-            font-size: 0.8rem;
-            margin-bottom: 20px;
-            opacity: 0.95;
-            line-height: 1.5; 
-        }
-
-        .login-card .content p strong {
-            color: #ffcccc; 
-        }
-
-        .login-card .content button {
-            display: inline-block;
-            padding: 10px 25px;
-            background: #b92025; 
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            border: none;
-            cursor: pointer;
-            border-radius: 30px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: 0.3s ease;
-        }
-
-        .login-card .content button:hover {
-            transform: scale(1.05);
-            background: #96171b;
-        }
-
-        .login-card .factory_img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 320px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 12px;
-            border: 4px solid #fff; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            transform: translate(-50%, -50%) scale(0);
-            z-index: 11;
-            transition: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
             pointer-events: none;
         }
 
-        .login-card:hover .factory_img {
-            top: 50%;
-            left: 75%; 
-            transform: translate(-50%, -50%) scale(1);
-            transition-delay: 0.2s;
+        .glass-panel-hover:hover::before {
+            left: 150%;
+            transition: 0.6s ease-in-out;
+        }
+
+        .glass-panel-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 
+                0 20px 40px 0 rgba(31, 38, 135, 0.15),
+                inset 0 3px 6px rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.55);
+            border-color: rgba(255, 255, 255, 1);
+        }
+
+        .glass-panel-hover:active {
+            transform: translateY(2px) scale(0.98);
+            box-shadow: 
+                0 5px 15px 0 rgba(31, 38, 135, 0.05),
+                inset 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        /* Glass Buttons */
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255,255,255,0.9);
+            border-left: 1px solid rgba(255,255,255,0.9);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            border-right: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05), inset 0 2px 4px rgba(255,255,255,0.8);
+            color: #1e293b;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .glass-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.7), rgba(255,255,255,0));
+            transform: skewX(-20deg);
+            transition: 0.5s;
+        }
+        .glass-btn:hover::after { left: 150%; }
+        .glass-btn:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1), inset 0 2px 5px rgba(255,255,255,1);
+        }
+        .glass-btn:active {
+            transform: translateY(1px) scale(0.96);
+            box-shadow: inset 0 3px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Glass Primary Action Button */
+        .glass-btn-primary {
+            background: rgba(56, 189, 248, 0.4);
+            color: #0c4a6e;
+            border-top: 1px solid rgba(255,255,255,0.9);
+            border-left: 1px solid rgba(255,255,255,0.9);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.4);
+            border-right: 1px solid rgba(56, 189, 248, 0.4);
+        }
+        .glass-btn-primary:hover {
+            background: rgba(56, 189, 248, 0.6);
+            color: #082f49;
+        }
+
+        /* Glass Input & Select */
+        .glass-input {
+            background: rgba(255, 255, 255, 0.4) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.6) !important;
+            border-top: 1px solid rgba(0,0,0,0.05) !important;
+            border-left: 1px solid rgba(0,0,0,0.05) !important;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03), 0 2px 5px rgba(255,255,255,0.5);
+            color: #334155 !important;
+            transition: all 0.3s ease;
+        }
+        .glass-input:focus, .glass-input:hover {
+            background: rgba(255, 255, 255, 0.7) !important;
+            border-color: rgba(255,255,255,0.9) !important;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02), 0 0 15px rgba(255,255,255,0.8);
+            outline: none;
         }
 
         /* 🟢 IKON AI - GUMPALAN CAHAYA ELEGAN (LIGHT ORB) */
@@ -192,268 +161,149 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
-            box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, transparent 70%);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
             z-index: 1;
         }
-
         .energy-orb::before {
-            content: '';
-            position: absolute;
-            inset: -6px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, transparent 30%, rgba(52, 211, 153, 0.2) 60%, rgba(16, 185, 129, 0.6) 100%);
-            filter: blur(8px);
-            animation: spin-clockwise 3s linear infinite;
-            z-index: -1;
-            pointer-events: none;
+            content: ''; position: absolute; inset: -6px; border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 30%, rgba(125, 211, 252, 0.3) 60%, rgba(14, 165, 233, 0.7) 100%);
+            filter: blur(8px); animation: spin-clockwise 3s linear infinite; z-index: -1; pointer-events: none;
         }
-
         .energy-orb::after {
-            content: '';
-            position: absolute;
-            inset: 15%;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(52, 211, 153, 0.6) 40%, transparent 80%);
-            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.8), 0 0 15px rgba(52, 211, 153, 0.6);
-            animation: pulse-glow 2s ease-in-out infinite alternate;
-            pointer-events: none;
+            content: ''; position: absolute; inset: 15%; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(125, 211, 252, 0.7) 40%, transparent 80%);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(125, 211, 252, 0.8);
+            animation: pulse-glow 2s ease-in-out infinite alternate; pointer-events: none;
         }
-        
         .chat-header-orb { width: 36px; height: 36px; }
         .chat-header-orb::after { inset: 20%; } 
         .floating-orb { width: 52px; height: 52px; }
         .floating-orb::after { inset: 18%; }
 
-        @keyframes pulse-glow {
-            0% { transform: scale(0.85); opacity: 0.7; }
-            100% { transform: scale(1.1); opacity: 1; }
-        }
+        @keyframes pulse-glow { 0% { transform: scale(0.85); opacity: 0.7; } 100% { transform: scale(1.1); opacity: 1; } }
         @keyframes spin-clockwise { 100% { transform: rotate(360deg); } }
 
-        /* 🎨 KARTU METRIK DENGAN EFEK HOVER PREMIUM */
-        .gradient-border {
-            position: relative;
-            border-radius: 0.75rem;
-            background: #ffffff !important;
-            border: 1px solid #e2e8f0 !important;
-            overflow: hidden; 
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.03);
-        }
-        .gradient-border:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 25px -5px rgba(245, 158, 11, 0.1), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
-            border-color: rgba(245, 158, 11, 0.4) !important;
-        }
-        .gradient-border::before {
-            content: ""; position: absolute; inset: 0; border-radius: 0.75rem; padding: 1.5px;
-            background: linear-gradient(135deg, #eab308, #f97316, #38bdf8, #eab308);
-            background-size: 300% 100%;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude; 
-            pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
-        }
-        @keyframes shine-flow {
-            0% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .gradient-border:hover::before { opacity: 1; animation: shine-flow 4s linear infinite; }
-        .gradient-border p, .gradient-border [class*="text-slate-"], .gradient-border .text-xs { color: #475569 !important; font-weight: 500 !important; }
-        .gradient-border h3 { color: #0f172a !important; font-weight: 700 !important; }
-
-        /* 🎨 AREA HEADER & STRUKTUR LOGO */
-        .title-logo-area { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
-        .logo-container { background-color: #ffffff; padding: 6px 14px; border-radius: 6px; width: fit-content; display: flex; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
-        .logo-container img { height: 32px; width: auto; }
-        .main-title { color: #0f172a !important; font-size: 24px; font-weight: 700; letter-spacing: -0.5px; margin: 0; }
-        .sub-title { font-size: 11px; font-weight: 800; color: #475569 !important; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; display: block; }
-
-        /* 🖨️ PRINT BUTTON */
-        .cyber-print-btn {
-            position: relative;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #fff; border: 1px solid #fcd34d;
-            box-shadow: 0 4px 15px -3px rgba(245, 158, 11, 0.4);
-            overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1;
-        }
-        .cyber-print-btn::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-            transition: left 0.6s ease; z-index: -1;
-        }
-        .cyber-print-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.6); border-color: #fef3c7;
-        }
-        .cyber-print-btn:hover::before { left: 100%; }
-        .cyber-print-btn:active { transform: scale(0.96); }
-        .btn-animate { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
-        .btn-animate:hover { transform: scale(1.04); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
-
-        select, input { transition: all 0.2s ease; background-color: #ffffff !important; color: #0f172a !important; }
-        select:hover, input:hover { border-color: #cbd5e1 !important; }
-        select:focus, input:focus { border-color: #f59e0b !important; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1); }
-        label[class*="text-slate-"] { color: #334155 !important; font-weight: 600 !important; }
-
-        /* 🤖 PURO AI - INTERFACE CHATROOM */
-        .puro-card {
-            background: linear-gradient(135deg, #f0fdfa 0%, #eff6ff 40%, #fef3c7 75%, #fae8ff 100%);
-            box-shadow: 0 12px 40px -5px rgba(16, 185, 129, 0.15), inset 0 1px 2.5px rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(110, 231, 183, 0.7); position: relative; overflow: hidden; color: #334155 !important;
-        }
-        .puro-card::before {
-            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
-            animation: rotate-glow 20s linear infinite; pointer-events: none;
-        }
-        @keyframes rotate-glow { 100% { transform: rotate(360deg); } }
-
-        .chat-bubble-puro {
-            background: rgba(255, 255, 255, 0.85); border: 1px solid rgba(16, 185, 129, 0.15);
-            border-radius: 0px 16px 16px 16px; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
-            animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .chat-bubble-user {
-            background: linear-gradient(135deg, #059669, #047857); color: #ffffff !important;
-            border-radius: 16px 0px 16px 16px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-            animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .chat-area-scroll { overflow-y: auto; padding-right: 4px; }
-        .chat-area-scroll::-webkit-scrollbar { width: 4px; }
-        
-        .suggested-prompt-btn {
-            background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(148, 163, 184, 0.3);
-            transition: all 0.2s ease; color: #059669 !important; font-weight: 500;
-        }
-        .suggested-prompt-btn:hover { background: #059669; color: #ffffff !important; border-color: #059669; transform: translateY(-1px); }
-
-        /* 📋 STRUKTUR TABEL INTERAKTIF */
-        .table-container { max-height: 520px; overflow-y: auto; position: relative; border-radius: 0.5rem; background-color: #ffffff; border: 1px solid #e2e8f0; width: 100%; }
+        /* 📋 STRUKTUR TABEL INTERAKTIF GLASS */
+        .table-container { max-height: 520px; overflow-y: auto; position: relative; width: 100%; }
         .custom-dashboard-table { table-layout: fixed; width: 100%; border-collapse: collapse; }
 
         .sticky-header th { 
-            position: sticky; top: 0; z-index: 10; background-color: #f1f5f9 !important; 
-            color: #334155 !important; font-weight: 600 !important;
-            box-shadow: inset 0 -2px 0 #cbd5e1; padding: 14px; white-space: nowrap;
+            position: sticky; top: 0; z-index: 10; 
+            background: rgba(255, 255, 255, 0.6) !important; 
+            backdrop-filter: blur(12px);
+            color: #1e293b !important; font-weight: 600 !important;
+            box-shadow: inset 0 -1px 0 rgba(255,255,255,0.8); padding: 14px; white-space: nowrap;
         }
-        #po-table-body tr { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); background-color: #ffffff; }
-        #po-table-body tr:nth-child(even) { background-color: #f8fafc; }
-        #po-table-body tr:hover { background-color: rgba(245, 158, 11, 0.05) !important; box-shadow: inset 4px 0 0 0 #f59e0b; }
-        #po-table-body tr:hover td { transform: translateX(2px); }
-        #po-table-body td { transition: transform 0.2s ease; padding: 14px; border-bottom: 1px solid #f1f5f9; }
+        #po-table-body tr { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); background-color: transparent; }
+        #po-table-body tr:nth-child(even) { background-color: rgba(255, 255, 255, 0.15); }
+        #po-table-body tr:hover { 
+            background-color: rgba(255, 255, 255, 0.7) !important; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05), inset 4px 0 0 0 #0ea5e9; 
+            transform: scale(1.01);
+            z-index: 2; position: relative;
+        }
+        #po-table-body td { transition: transform 0.2s ease; padding: 14px; border-bottom: 1px solid rgba(255,255,255,0.4); }
         #po-table-body td, #po-table-body td * { color: #334155 !important; font-weight: 400 !important; }
-        #po-table-body td:nth-child(2), #po-table-body td:nth-child(3) { font-weight: 500 !important; color: #0f172a !important; }
+        #po-table-body td:nth-child(2), #po-table-body td:nth-child(3) { font-weight: 600 !important; color: #0f172a !important; }
         
         .custom-client-badge {
             display: inline-flex !important; align-items: center; white-space: nowrap !important;
-            word-break: keep-all !important; padding: 4px 12px !important; border-radius: 6px !important;
-            font-size: 12px !important; font-weight: 600 !important; border: 1px solid transparent; transition: all 0.2s ease;
+            word-break: keep-all !important; padding: 4px 12px !important; border-radius: 8px !important;
+            font-size: 12px !important; font-weight: 600 !important; 
+            background: rgba(255,255,255,0.6) !important; border: 1px solid rgba(255,255,255,0.9);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: all 0.2s ease;
         }
-        #po-table-body tr:hover .custom-client-badge { transform: scale(1.03); }
-        .badge-komatsu { background-color: #fef9c3 !important; color: #854d0e !important; border-color: #fef08a !important; }
-        .badge-sumitomo { background-color: #ffedd5 !important; color: #c2410c !important; border-color: #fed7aa !important; }
-        .badge-others { background-color: #f1f5f9 !important; color: #475569 !important; border-color: #e2e8f0 !important; }
+        .badge-komatsu { color: #854d0e !important; }
+        .badge-sumitomo { color: #c2410c !important; }
+        .badge-others { color: #475569 !important; }
 
-        #po-table-body td .bg-emerald-500\/10 { background-color: #d1fae5 !important; border-color: #a7f3d0 !important; }
-        #po-table-body td .bg-emerald-500\/10 * { color: #065f46 !important; font-weight: 600 !important; } 
-        #po-table-body td .bg-amber-500\/10 { background-color: #fef3c7 !important; border-color: #fde68a !important; }
-        #po-table-body td .bg-amber-500\/10 * { color: #92400e !important; font-weight: 600 !important; } 
-        #po-table-body td .font-mono { color: #475569 !important; background-color: #f1f5f9 !important; border: 1px solid #e2e8f0 !important; }
+        .glass-status-badge {
+            background: rgba(255, 255, 255, 0.5) !important;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* 🤖 PURO AI CHAT GLASS */
+        .chat-bubble-puro {
+            background: rgba(255, 255, 255, 0.6); 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 0px 16px 16px 16px; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+            animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .chat-bubble-user {
+            background: rgba(14, 165, 233, 0.8); 
+            backdrop-filter: blur(10px); color: #ffffff !important;
+            border: 1px solid rgba(125, 211, 252, 0.6);
+            border-radius: 16px 0px 16px 16px; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+            animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
 
         @media print {
-            body { background: none !important; background-color: #ffffff !important; color: #000000 !important; padding: 0 !important; }
-            header, .no-print, button, select, input, .chart-container-parent, .puro-card, #login-overlay { display: none !important; }
-            .gradient-border { background: none !important; border: 1px solid #cbd5e1 !important; color: #000000 !important; }
-            .gradient-border::before { display: none !important; }
-            .gradient-border h3, .gradient-border p { color: #000000 !important; }
-            table { width: 100% !important; border: 1px solid #94a3b8 !important; color: #000000 !important; table-layout: auto !important; }
-            thead { display: table-header-group; background-color: #f1f5f9 !important; }
-            .sticky-header th { position: static !important; color: #000000 !important; background-color: #f1f5f9 !important; border-bottom: 2px solid #000000 !important; white-space: nowrap !important; }
-            tbody td { color: #000000 !important; border-bottom: 1px solid #e2e8f0 !important; }
+            body { background: #ffffff !important; color: #000000 !important; }
+            header, .no-print, button, select, input, .chart-container-parent, #puro-chat-container { display: none !important; }
+            .glass-panel { background: none !important; border: 1px solid #cbd5e1 !important; box-shadow: none !important; }
+            .glass-panel::before { display: none !important; }
+            table { width: 100% !important; border: 1px solid #94a3b8 !important; color: #000000 !important; }
             .print-header { display: block !important; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000000; padding-bottom: 10px; }
-            .table-container { max-height: none !important; overflow: visible !important; }
         }
         .print-header { display: none; }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-8 relative">
+<body class="p-4 md:p-8 relative">
 
-    <div id="login-overlay" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <div class="login-wrapper">
-            <div class="login-card" style="--clr: #124388;">
-                <div class="circle">
-                    <img src="MSB Logo.png" class="logo_img" alt="Logo PT Murinda">
-                </div>
-                
-                <div class="content">
-                    <h2>PT MURINDA SENTRA BAJA</h2>
-                    <p>
-                        Jl. Raya Kalijati Purwadadi No. 123A RT 006/02<br>
-                        Desa Kalijati Barat, Kecamatan Kalijati<br>
-                        Kabupaten Subang, West Java 41271 <br>
-                        (Exit Toll Gate Kalijati)<br><br>
-                        <strong>Phone :</strong> (+62260) 7495467<br>
-                        <strong>Fax :</strong> (+62260) 7495222<br>
-                        <strong>E-mail :</strong> plant@murinda.com
-                    </p>
-                    <button onclick="enterSystem()">LOGIN SISTEM</button>
-                </div>
-
-                <img src="Plant MSB.jpg" class="factory_img" alt="Plant PT Murinda">
-            </div>
-        </div>
-    </div>
-
-    <div id="po-login-modal" class="fixed inset-0 z-[150] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 transform scale-95 transition-transform duration-300">
-            <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
+    <!-- Modal Login PO System -->
+    <div id="po-login-modal" class="fixed inset-0 z-[150] flex items-center justify-center bg-slate-900/30 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-panel w-full max-w-md p-6 transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-4 border-b border-white/40 pb-3">
                 <div class="flex items-center space-x-2">
                     <i class="fa-solid fa-lock text-sky-600"></i>
                     <h3 class="text-lg font-bold text-slate-800">Autentikasi Sistem PO</h3>
                 </div>
-                <button onclick="closePOLogin()" class="text-slate-400 hover:text-rose-500 transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <button onclick="closePOLogin()" class="text-slate-500 hover:text-rose-500 transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="space-y-4 mt-2">
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1">Pilih Username</label>
-                    <select id="po-username" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-200 cursor-pointer shadow-sm">
+                    <select id="po-username" class="glass-input w-full rounded-lg px-3 py-2 cursor-pointer">
                         <option value="">-- Silakan Pilih User --</option>
                         <option value="Aspuro">Aspuro</option>
                     </select>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1">Password</label>
-                    <input type="password" id="po-password" placeholder="Masukkan password" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-200 shadow-sm">
+                    <input type="password" id="po-password" placeholder="Masukkan password" class="glass-input w-full rounded-lg px-3 py-2">
                 </div>
-                <div id="po-login-error" class="hidden text-rose-600 text-sm font-medium bg-rose-50 border border-rose-200 p-2 rounded-lg flex items-center gap-2">
+                <div id="po-login-error" class="hidden text-rose-600 text-sm font-medium bg-rose-100/50 backdrop-blur-sm border border-rose-300 p-2 rounded-lg flex items-center gap-2">
                     <i class="fa-solid fa-circle-exclamation"></i> Username atau Password tidak valid!
                 </div>
-                <button onclick="submitPOLogin()" class="w-full bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white font-bold py-2.5 rounded-lg shadow-md transition-all transform active:scale-95 mt-2">
+                <button onclick="submitPOLogin()" class="glass-btn glass-btn-primary w-full font-bold py-2.5 rounded-lg mt-2">
                     Login & Buka Sistem
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="po-iframe-container" class="hidden fixed inset-0 z-[90] bg-slate-50 flex-col">
-        <div class="bg-white border-b border-slate-200 p-4 flex justify-between items-center shadow-sm h-[72px]">
+    <!-- Iframe Container -->
+    <div id="po-iframe-container" class="hidden fixed inset-0 z-[90] bg-slate-50/50 backdrop-blur-xl flex-col">
+        <div class="glass-panel rounded-none border-x-0 border-t-0 p-4 flex justify-between items-center shadow-sm h-[72px]">
             <div class="flex items-center space-x-3">
-                <div class="bg-slate-100 p-2 rounded-lg border border-slate-200 shadow-inner">
+                <div class="bg-white/50 p-2 rounded-lg border border-white shadow-inner">
                     <img src="MSB Logo.png" alt="Murinda Logo" style="height: 24px;" onerror="this.src='https://via.placeholder.com/80x24?text=MSB'">
                 </div>
                 <div>
                     <h2 class="font-bold text-slate-800 text-lg leading-tight">Database PO Eksternal</h2>
-                    <p class="text-xs text-emerald-600 font-semibold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Terhubung</p>
+                    <p class="text-xs text-sky-600 font-semibold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></span> Terhubung</p>
                 </div>
             </div>
-            <button onclick="closePOSystem()" class="bg-rose-500 hover:bg-rose-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-2 shadow-sm transition hover:shadow-md transform active:scale-95">
+            <button onclick="closePOSystem()" class="glass-btn text-rose-600 px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-2">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 <span>Kembali ke Dashboard</span>
             </button>
         </div>
-        <iframe id="po-iframe" src="" class="w-full flex-1 border-none bg-slate-100 shadow-inner"></iframe>
+        <iframe id="po-iframe" src="" class="w-full flex-1 border-none bg-transparent"></iframe>
     </div>
 
     <div class="print-header">
@@ -464,103 +314,106 @@
 
     <div id="main-dashboard-content" class="max-w-7xl mx-auto space-y-6">
         
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-center p-6 bg-white rounded-xl border border-slate-200/80 backdrop-blur-md shadow-sm no-print">
-            <div class="title-logo-area">
-                <div class="logo-container">
-                    <img src="MSB Logo.png" alt="Murinda Logo" onerror="this.src='https://via.placeholder.com/100x30?text=MSB'">
+        <!-- HEADER GLASS -->
+        <header class="glass-panel flex flex-col md:flex-row justify-between items-start md:items-center p-6 no-print z-20">
+            <div class="flex flex-col items-start gap-3">
+                <div class="bg-white/60 backdrop-blur-sm padding-2 px-3 py-1.5 rounded-lg border border-white shadow-sm flex items-center">
+                    <img src="MSB Logo.png" alt="Murinda Logo" class="h-8" onerror="this.src='https://via.placeholder.com/100x30?text=MSB'">
                 </div>
-                <div class="title-section">
-                    <h1 class="main-title">Purchase Order Monitor & Analytics</h1>
-                    <span class="sub-title">MSB ERP SYSTEM</span>
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-800 tracking-tight m-0">Purchase Order Monitor & Analytics</h1>
+                    <span class="text-xs font-bold text-slate-500 tracking-widest uppercase">MSB ERP SYSTEM</span>
                 </div>
             </div>
             
             <div class="mt-5 md:mt-0 flex flex-wrap items-center gap-3">
-                
-                <div class="flex items-center space-x-4 bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-2xl p-2.5 pr-6 shadow-sm hover:shadow-md transition-all duration-300">
-                    <div class="relative w-10 h-10 flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl shadow-lg border border-slate-700 overflow-hidden">
-                        <i class="fa-solid fa-satellite-dish text-emerald-400 text-sm absolute z-10"></i>
-                        <div class="absolute inset-0 border border-emerald-500/30 rounded-xl animate-pulse"></div>
-                        <div class="absolute w-[200%] h-[200%] bg-[conic-gradient(from_0deg,transparent_0_340deg,rgba(52,211,153,0.3)_360deg)] animate-[spin_3s_linear_infinite] -top-1/2 -left-1/2"></div>
+                <div class="flex items-center space-x-4 glass-panel rounded-2xl p-2 pr-5 shadow-sm">
+                    <div class="relative w-10 h-10 flex items-center justify-center bg-white/40 rounded-xl shadow-inner border border-white overflow-hidden">
+                        <i class="fa-solid fa-satellite-dish text-sky-500 text-sm absolute z-10"></i>
+                        <div class="absolute inset-0 border border-sky-400/30 rounded-xl animate-pulse"></div>
                     </div>
                     <div class="text-left">
                         <p class="text-[10px] font-bold text-slate-500 tracking-[0.15em] uppercase">System Sync</p>
-                        <p id="sync-status" class="text-xs font-semibold text-emerald-600 flex items-center mt-0.5">
-                            <span class="w-2 h-2 bg-emerald-500 rounded-full inline-block mr-2 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></span>Online
+                        <p id="sync-status" class="text-xs font-semibold text-sky-600 flex items-center mt-0.5">
+                            <span class="w-2 h-2 bg-sky-500 rounded-full inline-block mr-2 shadow-[0_0_8px_rgba(14,165,233,0.8)] animate-pulse"></span>Online
                         </p>
                     </div>
                 </div>
 
-                <button onclick="openPOLogin()" class="btn-animate bg-sky-600 hover:bg-sky-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center space-x-2 shadow-md border border-sky-500">
+                <button onclick="openPOLogin()" class="glass-btn glass-btn-primary px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center space-x-2">
                     <i class="fa-solid fa-server"></i>
                     <span>Masuk Sistem PO</span>
                 </button>
 
-                <button onclick="triggerPrint()" class="cyber-print-btn px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center space-x-2">
+                <button onclick="triggerPrint()" class="glass-btn px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center space-x-2">
                     <i class="fa-solid fa-print"></i>
                     <span>Print Report</span>
                 </button>
-                <button onclick="fetchData()" class="btn-animate bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-lg font-medium text-sm flex items-center space-x-2 border border-slate-300">
+                <button onclick="fetchData()" class="glass-btn px-4 py-2.5 rounded-lg font-medium text-sm flex items-center space-x-2">
                     <i id="refresh-icon" class="fa-solid fa-rotate"></i>
                     <span>Refresh</span>
                 </button>
             </div>
         </header>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 no-print">
-            <div class="gradient-border p-6 cursor-default">
-                <p class="text-sm font-medium uppercase tracking-wider">Total Active PO</p>
-                <h3 id="metric-total-po" class="text-3xl font-bold mt-1">0</h3>
-                <p class="text-xs mt-1">Jumlah PO Masuk Terdaftar</p>
+        <!-- METRICS GLASS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 no-print z-10 relative">
+            <div class="glass-panel glass-panel-hover p-6">
+                <p class="text-sm font-semibold uppercase tracking-wider text-slate-500">Total Active PO</p>
+                <h3 id="metric-total-po" class="text-4xl font-extrabold mt-2 text-slate-800">0</h3>
+                <p class="text-xs mt-2 text-slate-500">Jumlah PO Masuk Terdaftar</p>
             </div>
-            <div class="gradient-border p-6 cursor-default">
-                <p class="text-sm font-medium uppercase tracking-wider">PT Komatsu Indonesia</p>
-                <h3 id="metric-komatsu" class="text-3xl font-bold mt-1">0</h3>
-                <p class="text-xs mt-1">Pesanan Terjadwal</p>
+            <div class="glass-panel glass-panel-hover p-6">
+                <p class="text-sm font-semibold uppercase tracking-wider text-slate-500">PT Komatsu</p>
+                <h3 id="metric-komatsu" class="text-4xl font-extrabold mt-2 text-slate-800">0</h3>
+                <p class="text-xs mt-2 text-slate-500">Pesanan Terjadwal</p>
             </div>
-            <div class="gradient-border p-6 cursor-default">
-                <p class="text-sm font-medium uppercase tracking-wider">PT Sumitomo Indonesia</p>
-                <h3 id="metric-sumitomo" class="text-3xl font-bold mt-1">0</h3>
-                <p class="text-xs mt-1">Pesanan Terjadwal</p>
+            <div class="glass-panel glass-panel-hover p-6">
+                <p class="text-sm font-semibold uppercase tracking-wider text-slate-500">PT Sumitomo</p>
+                <h3 id="metric-sumitomo" class="text-4xl font-extrabold mt-2 text-slate-800">0</h3>
+                <p class="text-xs mt-2 text-slate-500">Pesanan Terjadwal</p>
             </div>
-            <div class="gradient-border p-6 cursor-default">
-                <p class="text-sm font-medium uppercase tracking-wider">Total Terkirim</p>
-                <h3 id="metric-delivered" class="text-3xl font-bold text-emerald-600 mt-1">0</h3>
-                <p class="text-xs mt-1">Order Telah Selesai</p>
+            <div class="glass-panel glass-panel-hover p-6">
+                <p class="text-sm font-semibold uppercase tracking-wider text-slate-500">Total Terkirim</p>
+                <h3 id="metric-delivered" class="text-4xl font-extrabold mt-2 text-sky-600 drop-shadow-sm">0</h3>
+                <p class="text-xs mt-2 text-slate-500">Order Telah Selesai</p>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 chart-container-parent no-print">
-            <div class="lg:col-span-2 p-6 bg-white rounded-xl border border-slate-200 shadow-sm transition-all duration-300 hover:shadow-md">
-                <h3 class="text-lg font-semibold text-slate-800 mb-4"><i class="fa-solid fa-chart-line text-amber-500 mr-2"></i>Tren Distribusi PO Bulanan</h3>
+        <!-- CHARTS GLASS -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 chart-container-parent no-print relative z-10">
+            <div class="glass-panel glass-panel-hover lg:col-span-2 p-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-4"><i class="fa-solid fa-chart-line text-sky-500 mr-2 drop-shadow"></i>Tren Distribusi PO Bulanan</h3>
                 <div class="h-64"><canvas id="monthlyChart"></canvas></div>
             </div>
-            <div class="p-6 bg-white rounded-xl border border-slate-200 shadow-sm transition-all duration-300 hover:shadow-md">
-                <h3 class="text-lg font-semibold text-slate-800 mb-4"><i class="fa-solid fa-chart-pie text-sky-500 mr-2"></i>Proporsi Volume Client</h3>
+            <div class="glass-panel glass-panel-hover p-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-4"><i class="fa-solid fa-chart-pie text-indigo-400 mr-2 drop-shadow"></i>Proporsi Volume Client</h3>
                 <div class="h-64 flex justify-center items-center"><canvas id="clientChart"></canvas></div>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div class="p-5 border-b border-slate-200 bg-slate-50 space-y-4 no-print">
+        <!-- TABLE AREA GLASS -->
+        <div class="glass-panel glass-panel-hover mb-10 z-10">
+            <!-- Filter Section -->
+            <div class="p-5 border-b border-white/40 bg-white/20 space-y-4 no-print rounded-t-xl">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                     <div class="flex flex-col space-y-1.5">
-                        <label class="text-xs font-semibold uppercase tracking-wider">Filter Client</label>
-                        <select id="filter-client" onchange="updateUnitDropdownOptions(); executeAdvancedFilter();" class="bg-white border border-slate-200 text-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 w-full shadow-sm cursor-pointer">
+                        <label class="text-xs font-bold uppercase tracking-wider text-slate-600">Filter Client</label>
+                        <select id="filter-client" onchange="updateUnitDropdownOptions(); executeAdvancedFilter();" class="glass-input rounded-lg px-3 py-2 text-sm w-full cursor-pointer">
                             <option value="ALL">Semua Client</option>
                             <option value="Komatsu">PT Komatsu Indonesia</option>
                             <option value="Sumitomo">PT Sumitomo Construction</option>
                         </select>
                     </div>
                     <div class="flex flex-col space-y-1.5">
-                        <label class="text-xs font-semibold uppercase tracking-wider">Filter Unit Number</label>
-                        <select id="filter-unit" onchange="executeAdvancedFilter()" class="bg-white border border-slate-200 text-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 w-full shadow-sm cursor-pointer">
+                        <label class="text-xs font-bold uppercase tracking-wider text-slate-600">Filter Unit Number</label>
+                        <select id="filter-unit" onchange="executeAdvancedFilter()" class="glass-input rounded-lg px-3 py-2 text-sm w-full cursor-pointer">
                             <option value="ALL">Semua Unit</option>
                         </select>
                     </div>
                     <div class="flex flex-col space-y-1.5">
-                        <label class="text-xs font-semibold uppercase tracking-wider">Filter Bulan</label>
-                        <select id="filter-bulan" onchange="executeAdvancedFilter()" class="bg-white border border-slate-200 text-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 w-full shadow-sm cursor-pointer">
+                        <label class="text-xs font-bold uppercase tracking-wider text-slate-600">Filter Bulan</label>
+                        <select id="filter-bulan" onchange="executeAdvancedFilter()" class="glass-input rounded-lg px-3 py-2 text-sm w-full cursor-pointer">
                             <option value="ALL">Semua Bulan</option>
                             <option value="Januari">Januari</option><option value="Februari">Februari</option>
                             <option value="Maret">Maret</option><option value="April">April</option>
@@ -571,102 +424,105 @@
                         </select>
                     </div>
                     <div class="flex flex-col space-y-1.5">
-                        <label class="text-xs font-semibold uppercase tracking-wider">Status Delivery</label>
-                        <select id="filter-status" onchange="executeAdvancedFilter()" class="bg-white border border-slate-200 text-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 w-full shadow-sm cursor-pointer">
+                        <label class="text-xs font-bold uppercase tracking-wider text-slate-600">Status Delivery</label>
+                        <select id="filter-status" onchange="executeAdvancedFilter()" class="glass-input rounded-lg px-3 py-2 text-sm w-full cursor-pointer">
                             <option value="ALL">Semua Status</option>
                             <option value="Terkirim">Terkirim</option>
                             <option value="Pending">Pending</option>
                         </select>
                     </div>
                     <div class="flex flex-col space-y-1.5">
-                        <label class="text-xs font-semibold uppercase tracking-wider">Pencarian Cepat</label>
+                        <label class="text-xs font-bold uppercase tracking-wider text-slate-600">Pencarian Cepat</label>
                         <div class="relative w-full">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-magnifying-glass text-xs"></i></span>
-                            <input type="text" id="table-search" onkeyup="executeAdvancedFilter()" placeholder="Cari PO, Unit, Part..." class="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-500 shadow-sm">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"><i class="fa-solid fa-magnifying-glass text-xs"></i></span>
+                            <input type="text" id="table-search" onkeyup="executeAdvancedFilter()" placeholder="Cari PO, Unit, Part..." class="glass-input w-full pl-9 pr-4 py-2 rounded-lg text-sm placeholder-slate-500">
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Table -->
             <div class="table-container">
                 <table class="custom-dashboard-table text-left">
                     <thead>
-                        <tr class="sticky-header uppercase text-xs tracking-wider">
-                            <th class="py-3.5 px-4 font-semibold text-center" style="width: 5%;">No</th>
-                            <th class="py-3.5 px-4 font-semibold" style="width: 15%;">PO Number</th>
-                            <th class="py-3.5 px-4 font-semibold" style="width: 13%;">Unit Number</th>
-                            <th class="py-3.5 px-4 font-semibold" style="width: 14%;">Part Number</th>
-                            <th class="py-3.5 px-4 font-semibold" style="width: 23%;">Client</th>
-                            <th class="py-3.5 px-4 font-semibold" style="width: 13%;">Delivery Date</th>
-                            <th class="py-3.5 px-4 font-semibold" style="width: 12%;">Serial Number</th>
-                            <th class="py-3.5 px-4 font-semibold text-center" style="width: 12%;">Status</th>
+                        <tr class="sticky-header text-xs tracking-wider">
+                            <th class="py-3.5 px-4 text-center" style="width: 5%;">No</th>
+                            <th class="py-3.5 px-4" style="width: 15%;">PO Number</th>
+                            <th class="py-3.5 px-4" style="width: 13%;">Unit Number</th>
+                            <th class="py-3.5 px-4" style="width: 14%;">Part Number</th>
+                            <th class="py-3.5 px-4" style="width: 23%;">Client</th>
+                            <th class="py-3.5 px-4" style="width: 13%;">Delivery Date</th>
+                            <th class="py-3.5 px-4" style="width: 12%;">Serial Number</th>
+                            <th class="py-3.5 px-4 text-center" style="width: 12%;">Status</th>
                         </tr>
                     </thead>
-                    <tbody id="po-table-body" class="divide-y divide-slate-100 text-sm">
+                    <tbody id="po-table-body" class="divide-y divide-white/30 text-sm">
                         <tr id="table-loading">
-                            <td colspan="8" class="text-center py-20 text-slate-400">
-                                <i class="fa-solid fa-spinner fa-spin text-2xl text-amber-500 mb-3"></i>
-                                <p>Silakan klik Login Sistem terlebih dahulu untuk menyelaraskan data matriks operasional...</p>
+                            <td colspan="8" class="text-center py-20 text-slate-500">
+                                <i class="fa-solid fa-spinner fa-spin text-3xl text-sky-400 mb-4 drop-shadow"></i>
+                                <p class="font-medium">Mensinkronisasi matriks operasional via MSB Cloud...</p>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             
-            <div class="p-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
-                <div>Menampilkan <span id="displayed-rows" class="text-slate-700 font-medium">0</span> dari <span id="total-rows" class="text-slate-700 font-medium">0</span> entri PO aktif</div>
+            <!-- Footer -->
+            <div class="p-4 bg-white/20 border-t border-white/40 flex justify-between items-center text-xs text-slate-500 font-medium rounded-b-xl">
+                <div>Menampilkan <span id="displayed-rows" class="text-slate-800 font-bold">0</span> dari <span id="total-rows" class="text-slate-800 font-bold">0</span> entri PO aktif</div>
                 <div>Licensed to PT Murinda Sentra Baja | Developed by Aspuro Amarulloh Khoiri &copy; <span id="copyright-year">2026</span></div>
             </div>
         </div>
     </div>
 
+    <!-- PURO AI TRIGGER & CHAT -->
     <button id="puro-ai-trigger" onclick="togglePuroChat()" class="fixed bottom-8 right-8 z-[100] hover:scale-110 transition-transform duration-300 no-print group">
         <div class="energy-orb floating-orb"></div>
     </button>
 
     <div id="puro-chat-container" class="fixed bottom-24 right-8 w-[350px] max-w-[calc(100vw-2rem)] z-[100] hidden opacity-0 translate-y-4 transition-all duration-300 ease-out no-print">
-        <div class="puro-card rounded-2xl p-5 shadow-2xl border border-emerald-200">
-            <div class="absolute -top-10 -right-10 opacity-5 pointer-events-none">
-                <i class="fa-solid fa-comments text-[160px] text-emerald-900"></i>
+        <div class="glass-panel p-5 shadow-2xl">
+            <div class="absolute -top-10 -right-10 opacity-10 pointer-events-none">
+                <i class="fa-solid fa-comments text-[160px] text-sky-900"></i>
             </div>
 
             <div class="flex flex-col gap-4 relative z-10">
-                <div class="flex items-center justify-between pb-3 border-b border-emerald-200/40">
+                <div class="flex items-center justify-between pb-3 border-b border-white/50">
                     <div class="flex items-center space-x-3">
                         <div class="energy-orb chat-header-orb"></div>
                         <div>
                             <div class="flex items-center gap-2">
-                                <h3 class="text-sm font-bold text-slate-900">Puro AI</h3>
-                                <span class="text-[8px] font-mono font-bold bg-emerald-600 text-white px-1.5 py-0.5 rounded shadow-sm">v2.5</span>
+                                <h3 class="text-sm font-bold text-slate-900 drop-shadow-sm">Puro AI</h3>
+                                <span class="text-[8px] font-mono font-bold bg-sky-500/20 text-sky-700 border border-sky-500/40 px-1.5 py-0.5 rounded shadow-sm">v2.5</span>
                             </div>
-                            <p class="text-[9px] text-slate-500 font-medium">Asisten Interaktif MSB</p>
+                            <p class="text-[9px] text-slate-600 font-semibold">Asisten Interaktif MSB</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-1">
-                        <button onclick="clearChatLog()" class="text-xs text-slate-400 hover:text-rose-600 transition p-1.5 rounded hover:bg-rose-50" title="Bersihkan Chat">
+                        <button onclick="clearChatLog()" class="text-xs text-slate-500 hover:text-rose-600 transition p-1.5 rounded hover:bg-white/40" title="Bersihkan Chat">
                             <i class="fa-solid fa-trash-can"></i>
                         </button>
-                        <button onclick="togglePuroChat()" class="text-xs text-slate-400 hover:text-slate-800 transition p-1.5 rounded hover:bg-slate-100" title="Tutup Chat">
+                        <button onclick="togglePuroChat()" class="text-xs text-slate-500 hover:text-slate-900 transition p-1.5 rounded hover:bg-white/40" title="Tutup Chat">
                             <i class="fa-solid fa-xmark text-lg"></i>
                         </button>
                     </div>
                 </div>
 
-                <div id="puro-chat-history" class="chat-area-scroll space-y-3 pr-2 min-h-[180px] max-h-[250px]">
-                    </div>
-
-                <div class="flex flex-wrap gap-1.5 pt-1" id="puro-suggestions">
-                    <button onclick="sendQuickPrompt('Ringkasan statistik data saat ini')" class="suggested-prompt-btn px-2 py-1 rounded-md text-[10px] font-medium shadow-sm"><i class="fa-solid fa-chart-pie mr-1"></i> Ringkasan Utama</button>
-                    <button onclick="sendQuickPrompt('Cek unit yang pending')" class="suggested-prompt-btn px-2 py-1 rounded-md text-[10px] font-medium shadow-sm"><i class="fa-solid fa-clock mr-1"></i> Cek Pending</button>
+                <div id="puro-chat-history" class="overflow-y-auto space-y-3 pr-2 min-h-[180px] max-h-[250px]" style="scrollbar-width: thin;">
                 </div>
 
-                <div class="pt-2 border-t border-slate-200/60">
+                <div class="flex flex-wrap gap-1.5 pt-1" id="puro-suggestions">
+                    <button onclick="sendQuickPrompt('Ringkasan statistik data saat ini')" class="glass-btn px-2 py-1.5 rounded-md text-[10px] font-bold text-sky-700"><i class="fa-solid fa-chart-pie mr-1"></i> Ringkasan Utama</button>
+                    <button onclick="sendQuickPrompt('Cek unit yang pending')" class="glass-btn px-2 py-1.5 rounded-md text-[10px] font-bold text-sky-700"><i class="fa-solid fa-clock mr-1"></i> Cek Pending</button>
+                </div>
+
+                <div class="pt-2 border-t border-white/50">
                     <div class="flex gap-2 items-center">
                         <div class="relative flex-1">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-2.5 text-emerald-600"><i class="fa-solid fa-comment-dots text-xs"></i></span>
-                            <input type="text" id="puro-chat-input" onkeydown="if(event.key === 'Enter') handleUserChatSubmit()" placeholder="Tanya AI..." class="w-full pl-8 pr-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-2.5 text-sky-600"><i class="fa-solid fa-comment-dots text-xs"></i></span>
+                            <input type="text" id="puro-chat-input" onkeydown="if(event.key === 'Enter') handleUserChatSubmit()" placeholder="Tanya AI..." class="glass-input w-full pl-8 pr-3 py-2 rounded-lg text-xs">
                         </div>
-                        <button onclick="handleUserChatSubmit()" class="bg-emerald-600 hover:bg-emerald-700 text-white w-9 h-9 rounded-lg shadow-md flex items-center justify-center transition active:scale-95 flex-shrink-0">
+                        <button onclick="handleUserChatSubmit()" class="glass-btn glass-btn-primary w-9 h-9 rounded-lg shadow-md flex items-center justify-center transition active:scale-95 flex-shrink-0">
                             <i class="fa-solid fa-paper-plane text-xs"></i>
                         </button>
                     </div>
@@ -684,6 +540,9 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('copyright-year').innerText = new Date().getFullYear();
+            // Inisiasi data langsung tanpa login overlay
+            fetchData();
+            setInterval(fetchData, 300000);
         });
 
         /* 🤖 LOGIKA TOGGLE FLOATING PURO AI */
@@ -704,24 +563,7 @@
             }
         }
 
-        /* 🔓 LOGIKA ENTER SISTEM (Menghilangkan Overlay & Memuat Data) */
-        function enterSystem() {
-            const overlay = document.getElementById('login-overlay');
-            overlay.style.opacity = '0';
-            overlay.style.visibility = 'hidden';
-            
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-            }, 500); 
-            
-            fetchData();
-            setInterval(fetchData, 300000);
-        }
-
-        /* ==================================================
-           🔐 LOGIKA SISTEM PO EKSTERNAL (MODAL & IFRAME)
-           ================================================== */
-        
+        /* 🔐 LOGIKA SISTEM PO EKSTERNAL (MODAL & IFRAME) */
         function openPOLogin() {
             const modal = document.getElementById('po-login-modal');
             modal.classList.remove('hidden');
@@ -730,8 +572,6 @@
                 modal.querySelector('div').classList.remove('scale-95');
                 modal.querySelector('div').classList.add('scale-100');
             }, 10);
-            
-            // Reset input form
             document.getElementById('po-username').value = "";
             document.getElementById('po-password').value = "";
             document.getElementById('po-login-error').classList.add('hidden');
@@ -742,9 +582,7 @@
             modal.classList.add('opacity-0');
             modal.querySelector('div').classList.remove('scale-100');
             modal.querySelector('div').classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
         }
 
         function submitPOLogin() {
@@ -752,7 +590,6 @@
             const pass = document.getElementById('po-password').value;
             const errorMsg = document.getElementById('po-login-error');
 
-            // Cek Kredensial (Aspuro & 020109)
             if (user === 'Aspuro' && pass === '020109') {
                 errorMsg.classList.add('hidden');
                 closePOLogin();
@@ -763,17 +600,14 @@
         }
 
         function openPOSystem() {
-            // Sembunyikan konten dashboard utama dan Puro AI
             document.getElementById('main-dashboard-content').classList.add('hidden');
             document.getElementById('puro-ai-trigger').classList.add('hidden');
-            document.getElementById('puro-chat-container').classList.add('hidden'); // Memastikan chat tertutup
+            document.getElementById('puro-chat-container').classList.add('hidden'); 
             
-            // Tampilkan container iframe fullscreen
             const container = document.getElementById('po-iframe-container');
             container.classList.remove('hidden');
             container.classList.add('flex');
             
-            // Muat URL jika iframe masih kosong
             const iframe = document.getElementById('po-iframe');
             if (!iframe.src || iframe.src === window.location.href) {
                 iframe.src = "https://murindasentrabaja.github.io/Data-PO/";
@@ -781,17 +615,13 @@
         }
 
         function closePOSystem() {
-            // Sembunyikan iframe container
             const container = document.getElementById('po-iframe-container');
             container.classList.add('hidden');
             container.classList.remove('flex');
             
-            // Tampilkan kembali konten dashboard utama dan Puro AI
             document.getElementById('main-dashboard-content').classList.remove('hidden');
             document.getElementById('puro-ai-trigger').classList.remove('hidden');
         }
-        
-        /* ================================================== */
 
         function formatToShortDate(dateStr) {
             if (!dateStr || dateStr === "-" || dateStr.trim() === "") return "-";
@@ -838,8 +668,8 @@
                     renderDashboard(fullDataCache);
                     initPuroInitialGreeting(); 
                     if (syncStatus) {
-                        syncStatus.className = "text-xs font-semibold text-emerald-600 flex items-center mt-0.5";
-                        syncStatus.innerHTML = `<span class="w-2 h-2 bg-emerald-500 rounded-full inline-block mr-2 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></span>Online`;
+                        syncStatus.className = "text-xs font-semibold text-sky-600 flex items-center mt-0.5";
+                        syncStatus.innerHTML = `<span class="w-2 h-2 bg-sky-500 rounded-full inline-block mr-2 shadow-[0_0_8px_rgba(14,165,233,0.8)] animate-pulse"></span>Online`;
                     }
                     if (refreshIcon) refreshIcon.classList.remove('fa-spin');
                 })
@@ -853,7 +683,7 @@
                 });
         }
 
-        /* 🧠 PURO AI SYSTEM ENGINE - LOGIKA LIVE CHAT INTERAKTIF */
+        /* 🧠 PURO AI SYSTEM ENGINE */
         function initPuroInitialGreeting() {
             const chatHistory = document.getElementById('puro-chat-history');
             if(!chatHistory || fullDataCache.length === 0) return;
@@ -865,7 +695,7 @@
 
             chatHistory.innerHTML = `
                 <div class="chat-bubble-puro p-3.5 max-w-[90%]">
-                    <p class="text-xs font-bold text-emerald-600 mb-1"><i class="fa-solid fa-microchip mr-1"></i> PURO AI Core:</p>
+                    <p class="text-xs font-bold text-sky-700 mb-1"><i class="fa-solid fa-microchip mr-1"></i> PURO AI Core:</p>
                     <p class="text-[11px] leading-relaxed text-slate-700">
                         Otentikasi berhasil! Selamat datang Rekan **MSB Kalijati**. Saya mendeteksi ada **${total} data PO aktif** saat ini dengan tingkat kesuksesan pengiriman sebesar **${rate}%**.
                         <br><br>Ada yang bisa saya bantu jawab mengenai isi data?
@@ -899,11 +729,11 @@
             loadingBubble.id = loadingId;
             loadingBubble.className = "chat-bubble-puro p-3 max-w-[80%]";
             loadingBubble.innerHTML = `
-                <p class="text-xs font-bold text-emerald-600 mb-1"><i class="fa-solid fa-atom animate-spin mr-1"></i> Puro memproses...</p>
+                <p class="text-xs font-bold text-sky-600 mb-1"><i class="fa-solid fa-atom animate-spin mr-1"></i> Puro memproses...</p>
                 <div class="flex space-x-1.5 py-1">
-                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
-                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
-                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+                    <div class="w-2 h-2 bg-sky-500 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+                    <div class="w-2 h-2 bg-sky-500 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+                    <div class="w-2 h-2 bg-sky-500 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
                 </div>
             `;
             chatHistory.appendChild(loadingBubble);
@@ -926,7 +756,7 @@
             } else {
                 bubble.className = "chat-bubble-puro p-3.5 max-w-[90%]";
                 bubble.innerHTML = `
-                    <p class="text-xs font-bold text-emerald-600 mb-1"><i class="fa-solid fa-microchip mr-1"></i> PURO AI Core:</p>
+                    <p class="text-xs font-bold text-sky-700 mb-1"><i class="fa-solid fa-microchip mr-1"></i> PURO AI Core:</p>
                     <p class="text-[11px] leading-relaxed text-slate-700">${text}</p>
                 `;
             }
@@ -942,7 +772,6 @@
 
             let komatsu = 0; let sumitomo = 0; let terkirim = 0;
             let pendingList = [];
-            let monthlyDistribution = {};
 
             fullDataCache.forEach(item => {
                 let client = (item.Client || "").toLowerCase();
@@ -952,9 +781,6 @@
                 let isDelivered = getCleanStatus(item.Status) === "Terkirim";
                 if(isDelivered) terkirim++;
                 else pendingList.push(item);
-
-                let bln = item.Bulan || "Unknown";
-                monthlyDistribution[bln] = (monthlyDistribution[bln] || 0) + 1;
             });
 
             if(query.includes("ringkasan") || query.includes("statistik") || query.includes("total") || query.includes("semua data")) {
@@ -974,13 +800,8 @@
                 return textRes;
             }
 
-            if(query.includes("komatsu")) {
-                return `Analisis <strong>PT Komatsu Indonesia</strong>:<br> Total pesanan berjumlah <strong>${komatsu} PO</strong>.`;
-            }
-
-            if(query.includes("sumitomo")) {
-                return `Analisis <strong>PT Sumitomo CMI</strong>:<br> Total pesanan berjumlah <strong>${sumitomo} PO</strong>.`;
-            }
+            if(query.includes("komatsu")) { return `Analisis <strong>PT Komatsu Indonesia</strong>:<br> Total pesanan berjumlah <strong>${komatsu} PO</strong>.`; }
+            if(query.includes("sumitomo")) { return `Analisis <strong>PT Sumitomo CMI</strong>:<br> Total pesanan berjumlah <strong>${sumitomo} PO</strong>.`; }
 
             let matches = fullDataCache.filter(item => 
                 (item.PO_Number && item.PO_Number.toLowerCase().includes(query)) ||
@@ -1053,25 +874,25 @@
             const tableBody = document.getElementById('po-table-body');
             if (!tableBody) return; tableBody.innerHTML = "";
             if(!data || data.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-slate-400">Tidak ada record data.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-slate-500 font-medium">Tidak ada record data.</td></tr>`;
                 document.getElementById('displayed-rows').innerText = 0; return;
             }
             data.forEach((item, index) => {
                 let clientName = item.Client || '-';
                 let clientBadgeColor = clientName.includes("Komatsu") ? "badge-komatsu" : (clientName.includes("Sumitomo") ? "badge-sumitomo" : "badge-others");
                 let cleanStatus = getCleanStatus(item.Status);
-                let statusBadgeColor = cleanStatus === "Terkirim" ? "bg-emerald-500/10 text-emerald-700 border-emerald-500/20" : "bg-amber-500/10 text-amber-700 border-amber-500/20";
+                let statusBadgeColor = cleanStatus === "Terkirim" ? "text-sky-700 border-sky-400" : "text-amber-700 border-amber-400";
+                
                 let row = document.createElement('tr');
-                row.className = "border-b border-slate-100";
                 row.innerHTML = `
-                    <td class="py-3.5 px-4 text-center font-medium text-slate-400">${index + 1}</td>
-                    <td class="py-3.5 px-4 font-semibold tracking-wider truncate">${item.PO_Number || '-'}</td>
-                    <td class="py-3.5 px-4 font-medium text-sky-600 truncate">${item.Unit_Number || '-'}</td>
-                    <td class="py-3.5 px-4 truncate">${item.Part_Number || '-'}</td>
+                    <td class="py-3.5 px-4 text-center font-bold text-slate-400">${index + 1}</td>
+                    <td class="py-3.5 px-4 font-bold tracking-wider truncate">${item.PO_Number || '-'}</td>
+                    <td class="py-3.5 px-4 font-bold text-sky-700 truncate">${item.Unit_Number || '-'}</td>
+                    <td class="py-3.5 px-4 font-medium truncate">${item.Part_Number || '-'}</td>
                     <td class="py-3.5 px-4 truncate"><span class="custom-client-badge ${clientBadgeColor}">${clientName}</span></td>
-                    <td class="py-3.5 px-4 white-space-nowrap"><i class="fa-regular fa-calendar-days text-xs mr-1.5 text-slate-400"></i>${formatToShortDate(item.Delivery_Date)}</td>
-                    <td class="py-3.5 px-4"><span class="font-mono text-xs bg-slate-50 px-2 py-1 rounded text-slate-600 border border-slate-200 truncate">${item.Serial_Number || '-'}</span></td>
-                    <td class="py-3.5 px-4 text-center"><span class="px-2.5 py-1 text-xs font-semibold rounded-full border ${statusBadgeColor}">${cleanStatus}</span></td>
+                    <td class="py-3.5 px-4 white-space-nowrap font-medium"><i class="fa-regular fa-calendar-days text-xs mr-1.5 text-slate-400"></i>${formatToShortDate(item.Delivery_Date)}</td>
+                    <td class="py-3.5 px-4"><span class="font-mono font-bold text-xs bg-white/50 px-2 py-1 rounded text-slate-700 border border-white/60 shadow-sm truncate">${item.Serial_Number || '-'}</span></td>
+                    <td class="py-3.5 px-4 text-center"><span class="glass-status-badge px-3 py-1 text-xs font-bold rounded-full border ${statusBadgeColor}">${cleanStatus}</span></td>
                 `;
                 tableBody.appendChild(row);
             });
@@ -1106,25 +927,32 @@
             const canvasMonthly = document.getElementById('monthlyChart'); const canvasClient = document.getElementById('clientChart');
             if(!canvasMonthly || !canvasClient) return;
 
+            // Updated chart colors to fit pastel glass theme
+            Chart.defaults.color = '#475569';
+            Chart.defaults.font.family = "'Inter', sans-serif";
+
             monthlyChartInstance = new Chart(canvasMonthly.getContext('2d'), {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [
-                        { label: 'PT Komatsu Indonesia', data: Object.values(dataKomatsu), borderColor: '#eab308', backgroundColor: 'transparent', borderWidth: 2.5, tension: 0.35 },
-                        { label: 'PT Sumitomo CMI', data: Object.values(dataSumitomo), borderColor: '#f97316', backgroundColor: 'transparent', borderWidth: 2.5, tension: 0.35 }
+                        { label: 'PT Komatsu', data: Object.values(dataKomatsu), borderColor: '#f59e0b', backgroundColor: 'rgba(245, 158, 11, 0.1)', borderWidth: 3, tension: 0.4, fill: true },
+                        { label: 'PT Sumitomo', data: Object.values(dataSumitomo), borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', borderWidth: 3, tension: 0.4, fill: true }
                     ]
                 },
                 options: { responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#475569' } } },
-                    scales: { y: { grid: { color: '#f1f5f9' }, ticks: { color: '#64748b' } }, x: { grid: { display: false }, ticks: { color: '#64748b' } } }
+                    plugins: { legend: { labels: { font: { weight: '600' } } } },
+                    scales: { 
+                        y: { grid: { color: 'rgba(255,255,255,0.4)', drawBorder: false }, ticks: { font: { weight: '500' } } }, 
+                        x: { grid: { display: false }, ticks: { font: { weight: '500' } } } 
+                    }
                 }
             });
 
             clientChartInstance = new Chart(canvasClient.getContext('2d'), {
                 type: 'doughnut',
-                data: { labels: Object.keys(clients), datasets: [{ data: Object.values(clients), backgroundColor: ['#eab308', '#f97316', '#cbd5e1'] }] },
-                options: { responsive: true, maintainAspectRatio: false, cutout: '78%', plugins: { legend: { position: 'bottom', labels: { color: '#475569' } } } }
+                data: { labels: Object.keys(clients), datasets: [{ data: Object.values(clients), backgroundColor: ['#f59e0b', '#0ea5e9', '#94a3b8'], borderWidth: 2, borderColor: 'rgba(255,255,255,0.8)' }] },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '75%', plugins: { legend: { position: 'bottom', labels: { font: { weight: '600' } } } } }
             });
         }
 
